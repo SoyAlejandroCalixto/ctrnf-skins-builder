@@ -1,0 +1,26 @@
+{
+  "model": "work/downloads/Nintendo 64 - Super Mario 64 - Playable Characters - Mario/mario.fbx",
+  "keep": ["mario_body", "mario_cap_on", "mario_left_hand_fist", "mario_right_hand_fist"],
+  "rotate_z": 90,
+  "radial_scale": 0.0115,
+  "atlas": {"size": 1024, "slot": "Cloth"},
+  "segments": {
+    "pelvis": {"bone": "Bone_Pelvis", "from": ["pelvis", "neck"], "to": ["Bone_Pelvis", "Bone_Neck"]},
+    "chest": {"bone": "Bone_Spine4", "from": ["pelvis", "neck"], "to": ["Bone_Pelvis", "Bone_Neck"]},
+    "head": {"bone": "Bone_Head", "rigid": 0.0085, "from": ["head"], "to": ["Bone_Neck"]},
+    "left_upperarm": {"bone": "Bone_L_UpperArm", "from": ["left_upperarm", "left_forearm"], "to": ["Bone_L_UpperArm", "Bone_L_Forearm"]},
+    "left_forearm": {"bone": "Bone_L_Forearm", "from": ["left_forearm", "left_hand"], "to": ["Bone_L_Forearm", "Bone_L_Hand"]},
+    "left_hand": {"bone": "Bone_L_Hand", "rigid": 0.0115, "from": ["left_hand"], "to": ["Bone_L_Hand"],
+                  "align_from": ["left_forearm", "left_hand"], "align": ["Bone_L_Hand", "Bone_L_Middle"]},
+    "right_upperarm": {"bone": "Bone_R_UpperArm", "from": ["right_upperarm", "right_forearm"], "to": ["Bone_R_UpperArm", "Bone_R_Forearm"]},
+    "right_forearm": {"bone": "Bone_R_Forearm", "from": ["right_forearm", "right_hand"], "to": ["Bone_R_Forearm", "Bone_R_Hand"]},
+    "right_hand": {"bone": "Bone_R_Hand", "rigid": 0.0115, "from": ["right_hand"], "to": ["Bone_R_Hand"],
+                   "align_from": ["right_forearm", "right_hand"], "align": ["Bone_R_Hand", "Bone_R_Middle"]},
+    "left_thigh": {"bone": "Bone_L_Thigh", "from": ["left_thigh", "left_leg"], "to": ["Bone_L_Thigh", "Bone_L_Calf"]},
+    "left_leg": {"bone": "Bone_L_Calf", "from": ["left_leg", "left_foot"], "to": ["Bone_L_Calf", "Bone_L_Foot"]},
+    "left_foot": {"bone": "Bone_L_Foot", "rigid": 0.0115, "from": ["left_foot"], "to": ["Bone_L_Foot"]},
+    "right_thigh": {"bone": "Bone_R_Thigh", "from": ["right_thigh", "right_leg"], "to": ["Bone_R_Thigh", "Bone_R_Calf"]},
+    "right_leg": {"bone": "Bone_R_Calf", "from": ["right_leg", "right_foot"], "to": ["Bone_R_Calf", "Bone_R_Foot"]},
+    "right_foot": {"bone": "Bone_R_Foot", "rigid": 0.0115, "from": ["right_foot"], "to": ["Bone_R_Foot"]}
+  }
+}

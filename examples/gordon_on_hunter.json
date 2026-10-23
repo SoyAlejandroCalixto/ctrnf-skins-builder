@@ -1,0 +1,214 @@
+{
+ "model": "work/gordon_src/Gordon/Gordon.fbx",
+ "rotate_z": 90,
+ "radial_scale": 0.02,
+ "texture_dirs": [
+  "work/downloads/half-life-2-survivor-gordon-freeman/textures"
+ ],
+ "atlas": {
+  "size": 1024,
+  "slot": "Body"
+ },
+ "segments": {
+  "ValveBiped_Bip01_Pelvis": {
+   "bone": "Bone_Pelvis",
+   "from": [
+    "ValveBiped_Bip01_Pelvis",
+    "ValveBiped_Bip01_Neck1"
+   ],
+   "to": [
+    "Bone_Pelvis",
+    "Bone_Neck"
+   ]
+  },
+  "ValveBiped_Bip01_Head1": {
+   "bone": "Bone_Head",
+   "rigid": 0.026,
+   "from": [
+    "ValveBiped_Bip01_Head1"
+   ],
+   "to": [
+    "Bone_neckB"
+   ]
+  },
+  "ValveBiped_Bip01_L_UpperArm": {
+   "bone": "Bone_L_UpperArm",
+   "from": [
+    "ValveBiped_Bip01_L_UpperArm",
+    "ValveBiped_Bip01_L_Forearm"
+   ],
+   "to": [
+    "Bone_L_UpperArm",
+    "Bone_L_Forearm"
+   ]
+  },
+  "ValveBiped_Bip01_L_Forearm": {
+   "bone": "Bone_L_Forearm",
+   "from": [
+    "ValveBiped_Bip01_L_Forearm",
+    "ValveBiped_Bip01_L_Hand"
+   ],
+   "to": [
+    "Bone_L_Forearm",
+    "Bone_L_Hand"
+   ]
+  },
+  "ValveBiped_Bip01_L_Hand": {
+   "bone": "Bone_L_Hand",
+   "rigid": 0.022,
+   "from": [
+    "ValveBiped_Bip01_L_Hand"
+   ],
+   "to": [
+    "Bone_L_Hand"
+   ],
+   "align_from": [
+    "ValveBiped_Bip01_L_Hand",
+    "ValveBiped_Bip01_L_Finger2"
+   ],
+   "align": [
+    "Bone_L_Hand",
+    "Bone_L_Middle"
+   ]
+  },
+  "ValveBiped_Bip01_R_UpperArm": {
+   "bone": "Bone_R_UpperArm",
+   "from": [
+    "ValveBiped_Bip01_R_UpperArm",
+    "ValveBiped_Bip01_R_Forearm"
+   ],
+   "to": [
+    "Bone_R_UpperArm",
+    "Bone_R_Forearm"
+   ]
+  },
+  "ValveBiped_Bip01_R_Forearm": {
+   "bone": "Bone_R_Forearm",
+   "from": [
+    "ValveBiped_Bip01_R_Forearm",
+    "ValveBiped_Bip01_R_Hand"
+   ],
+   "to": [
+    "Bone_R_Forearm",
+    "Bone_R_Hand"
+   ]
+  },
+  "ValveBiped_Bip01_R_Hand": {
+   "bone": "Bone_R_Hand",
+   "rigid": 0.022,
+   "from": [
+    "ValveBiped_Bip01_R_Hand"
+   ],
+   "to": [
+    "Bone_R_Hand"
+   ],
+   "align_from": [
+    "ValveBiped_Bip01_R_Hand",
+    "ValveBiped_Bip01_R_Finger2"
+   ],
+   "align": [
+    "Bone_R_Hand",
+    "Bone_R_Middle"
+   ]
+  },
+  "ValveBiped_Bip01_L_Thigh": {
+   "bone": "Bone_L_Thigh",
+   "from": [
+    "ValveBiped_Bip01_L_Thigh",
+    "ValveBiped_Bip01_L_Calf"
+   ],
+   "to": [
+    "Bone_L_Thigh",
+    "Bone_L_Calf"
+   ]
+  },
+  "ValveBiped_Bip01_L_Calf": {
+   "bone": "Bone_L_Calf",
+   "from": [
+    "ValveBiped_Bip01_L_Calf",
+    "ValveBiped_Bip01_L_Foot"
+   ],
+   "to": [
+    "Bone_L_Calf",
+    "Bone_L_Foot"
+   ]
+  },
+  "ValveBiped_Bip01_L_Foot": {
+   "bone": "Bone_L_Foot",
+   "from": [
+    "ValveBiped_Bip01_L_Foot",
+    "ValveBiped_Bip01_L_Toe0"
+   ],
+   "to": [
+    "Bone_L_Foot",
+    "Bone_L_Toe0"
+   ]
+  },
+  "ValveBiped_Bip01_R_Thigh": {
+   "bone": "Bone_R_Thigh",
+   "from": [
+    "ValveBiped_Bip01_R_Thigh",
+    "ValveBiped_Bip01_R_Calf"
+   ],
+   "to": [
+    "Bone_R_Thigh",
+    "Bone_R_Calf"
+   ]
+  },
+  "ValveBiped_Bip01_R_Calf": {
+   "bone": "Bone_R_Calf",
+   "from": [
+    "ValveBiped_Bip01_R_Calf",
+    "ValveBiped_Bip01_R_Foot"
+   ],
+   "to": [
+    "Bone_R_Calf",
+    "Bone_R_Foot"
+   ]
+  },
+  "ValveBiped_Bip01_R_Foot": {
+   "bone": "Bone_R_Foot",
+   "from": [
+    "ValveBiped_Bip01_R_Foot",
+    "ValveBiped_Bip01_R_Toe0"
+   ],
+   "to": [
+    "Bone_R_Foot",
+    "Bone_R_Toe0"
+   ]
+  },
+  "ValveBiped_Bip01_L_Toe0": {
+   "bone": "Bone_L_Toe0",
+   "rigid": 0.022,
+   "from": [
+    "ValveBiped_Bip01_L_Toe0"
+   ],
+   "to": [
+    "Bone_L_Toe0"
+   ]
+  },
+  "ValveBiped_Bip01_R_Toe0": {
+   "bone": "Bone_R_Toe0",
+   "rigid": 0.022,
+   "from": [
+    "ValveBiped_Bip01_R_Toe0"
+   ],
+   "to": [
+    "Bone_R_Toe0"
+   ]
+  }
+ },
+ "bones": {
+  "ValveBiped_Bip01_Spine": "Bone_Spine1",
+  "ValveBiped_Bip01_Spine1": "Bone_Spine2",
+  "ValveBiped_Bip01_Spine2": "Bone_Spine3",
+  "ValveBiped_Bip01_Spine4": "Bone_Spine4",
+  "ValveBiped_Bip01_L_Latt": "Bone_Spine3",
+  "ValveBiped_Bip01_R_Latt": "Bone_Spine3",
+  "ValveBiped_Bip01_Neck1": "Bone_Neck",
+  "ValveBiped_Bip01_L_Clavicle": "Bone_L_Clavicle",
+  "ValveBiped_Bip01_R_Clavicle": "Bone_R_Clavicle",
+  "ValveBiped_Bip01_L_Trapezius": "Bone_L_Clavicle",
+  "ValveBiped_Bip01_R_Trapezius": "Bone_R_Clavicle"
+ }
+}

@@ -1,0 +1,211 @@
+{
+ "model": "work/sonic/src/rar/Sonic/Sonic_(CW).fbx",
+ "rotate_z": 90,
+ "radial_scale": 0.12,
+ "drop_groups": [
+  "Eyelid"
+ ],
+ "texture_dirs": [
+  "work/sonic/src/rar/Sonic/textures"
+ ],
+ "segments": {
+  "Hips": {
+   "bone": "Bone_Pelvis",
+   "from": [
+    "Hips",
+    "Neck"
+   ],
+   "to": [
+    "Bone_Pelvis",
+    "Bone_Neck"
+   ]
+  },
+  "Head": {
+   "bone": "Bone_Head",
+   "rigid": 0.14,
+   "from": [
+    "Head"
+   ],
+   "to": [
+    "Bone_neckB"
+   ]
+  },
+  "LeftArm": {
+   "bone": "Bone_L_UpperArm",
+   "from": [
+    "LeftArm",
+    "LeftForeArm"
+   ],
+   "to": [
+    "Bone_L_UpperArm",
+    "Bone_L_Forearm"
+   ]
+  },
+  "LeftForeArm": {
+   "bone": "Bone_L_Forearm",
+   "from": [
+    "LeftForeArm",
+    "LeftHand"
+   ],
+   "to": [
+    "Bone_L_Forearm",
+    "Bone_L_Hand"
+   ]
+  },
+  "LeftHand": {
+   "bone": "Bone_L_Hand",
+   "rigid": 0.09,
+   "from": [
+    "LeftHand"
+   ],
+   "to": [
+    "Bone_L_Hand"
+   ],
+   "align_from": [
+    "LeftHand",
+    "LeftHandMiddle1"
+   ],
+   "align": [
+    "Bone_L_Hand",
+    "Bone_L_Middle"
+   ]
+  },
+  "LeftUpLeg": {
+   "bone": "Bone_L_Thigh",
+   "from": [
+    "LeftUpLeg",
+    "LeftLeg"
+   ],
+   "to": [
+    "Bone_L_Thigh",
+    "Bone_L_Calf"
+   ]
+  },
+  "LeftLeg": {
+   "bone": "Bone_L_Calf",
+   "from": [
+    "LeftLeg",
+    "LeftFoot"
+   ],
+   "to": [
+    "Bone_L_Calf",
+    "Bone_L_Foot"
+   ]
+  },
+  "LeftFoot": {
+   "bone": "Bone_L_Foot",
+   "rigid": 0.075,
+   "from": [
+    "LeftFoot"
+   ],
+   "to": [
+    "Bone_L_Foot"
+   ]
+  },
+  "RightArm": {
+   "bone": "Bone_R_UpperArm",
+   "from": [
+    "RightArm",
+    "RightForeArm"
+   ],
+   "to": [
+    "Bone_R_UpperArm",
+    "Bone_R_Forearm"
+   ]
+  },
+  "RightForeArm": {
+   "bone": "Bone_R_Forearm",
+   "from": [
+    "RightForeArm",
+    "RightHand"
+   ],
+   "to": [
+    "Bone_R_Forearm",
+    "Bone_R_Hand"
+   ]
+  },
+  "RightHand": {
+   "bone": "Bone_R_Hand",
+   "rigid": 0.09,
+   "from": [
+    "RightHand"
+   ],
+   "to": [
+    "Bone_R_Hand"
+   ],
+   "align_from": [
+    "RightHand",
+    "RightHandMiddle1"
+   ],
+   "align": [
+    "Bone_R_Hand",
+    "Bone_R_Middle"
+   ]
+  },
+  "RightUpLeg": {
+   "bone": "Bone_R_Thigh",
+   "from": [
+    "RightUpLeg",
+    "RightLeg"
+   ],
+   "to": [
+    "Bone_R_Thigh",
+    "Bone_R_Calf"
+   ]
+  },
+  "RightLeg": {
+   "bone": "Bone_R_Calf",
+   "from": [
+    "RightLeg",
+    "RightFoot"
+   ],
+   "to": [
+    "Bone_R_Calf",
+    "Bone_R_Foot"
+   ]
+  },
+  "RightFoot": {
+   "bone": "Bone_R_Foot",
+   "rigid": 0.075,
+   "from": [
+    "RightFoot"
+   ],
+   "to": [
+    "Bone_R_Foot"
+   ]
+  }
+ },
+ "bones": {
+  "Pelvis": "Bone_Pelvis",
+  "Spine": "Bone_Spine2",
+  "Spine1": "Bone_Spine4",
+  "LeftShoulder": "Bone_L_Clavicle",
+  "RightShoulder": "Bone_R_Clavicle",
+  "LeftToeBase": "Bone_L_Toe0",
+  "RightToeBase": "Bone_R_Toe0",
+  "Neck": "Bone_Neck"
+ },
+ "atlas": {
+  "size": 2048,
+  "slot": "CortexDriver_Body"
+ },
+ "lods": [
+  20000,
+  15000,
+  14500,
+  5200,
+  3050
+ ],
+ "base_colors": {
+  "M_Sonic_Eye_L_Inst": [
+   0.02,
+   0.02,
+   0.04
+  ],
+  "M_Sonic_Eye_R_Inst": [
+   0.02,
+   0.02,
+   0.04
+  ]
+ }
+}

@@ -1,0 +1,346 @@
+{
+ "model": "work/jake/prep/jake_rigged.glb",
+ "rotate_z": 90,
+ "radial_scale": 0.116,
+ "segments": {
+  "pelvis": {
+   "bone": "Bone_Pelvis",
+   "rigid": 0.116,
+   "from": [
+    "pelvis"
+   ],
+   "to": [
+    "Bone_Pelvis"
+   ]
+  },
+  "upperarm_L": {
+   "bone": "Bone_L_UpperArm",
+   "from": [
+    "upperarm_L",
+    "forearm_L"
+   ],
+   "to": [
+    "Bone_L_UpperArm",
+    "Bone_L_Forearm"
+   ]
+  },
+  "forearm_L": {
+   "bone": "Bone_L_Forearm",
+   "from": [
+    "forearm_L",
+    "hand_L"
+   ],
+   "to": [
+    "Bone_L_Forearm",
+    "Bone_L_Middle"
+   ]
+  },
+  "hand_L": {
+   "bone": "Bone_L_Hand",
+   "rigid": 0.13,
+   "from": [
+    "hand_L"
+   ],
+   "to": [
+    "Bone_L_Middle"
+   ]
+  },
+  "upperarm_R": {
+   "bone": "Bone_R_UpperArm",
+   "from": [
+    "upperarm_R",
+    "forearm_R"
+   ],
+   "to": [
+    "Bone_R_UpperArm",
+    "Bone_R_Forearm"
+   ]
+  },
+  "forearm_R": {
+   "bone": "Bone_R_Forearm",
+   "from": [
+    "forearm_R",
+    "hand_R"
+   ],
+   "to": [
+    "Bone_R_Forearm",
+    "Bone_R_Middle"
+   ]
+  },
+  "hand_R": {
+   "bone": "Bone_R_Hand",
+   "rigid": 0.13,
+   "from": [
+    "hand_R"
+   ],
+   "to": [
+    "Bone_R_Middle"
+   ]
+  },
+  "thigh_L": {
+   "bone": "Bone_L_Thigh",
+   "from": [
+    "thigh_L",
+    "calf_L"
+   ],
+   "to": [
+    "Bone_L_Thigh",
+    "Bone_L_Calf"
+   ]
+  },
+  "calf_L": {
+   "bone": "Bone_L_Calf",
+   "from": [
+    "calf_L",
+    "foot_L"
+   ],
+   "to": [
+    "Bone_L_Calf",
+    "Bone_L_Foot"
+   ]
+  },
+  "foot_L": {
+   "bone": "Bone_L_Foot",
+   "rigid": 0.116,
+   "from": [
+    "foot_L"
+   ],
+   "to": [
+    "Bone_L_Foot"
+   ]
+  },
+  "thigh_R": {
+   "bone": "Bone_R_Thigh",
+   "from": [
+    "thigh_R",
+    "calf_R"
+   ],
+   "to": [
+    "Bone_R_Thigh",
+    "Bone_R_Calf"
+   ]
+  },
+  "calf_R": {
+   "bone": "Bone_R_Calf",
+   "from": [
+    "calf_R",
+    "foot_R"
+   ],
+   "to": [
+    "Bone_R_Calf",
+    "Bone_R_Foot"
+   ]
+  },
+  "foot_R": {
+   "bone": "Bone_R_Foot",
+   "rigid": 0.116,
+   "from": [
+    "foot_R"
+   ],
+   "to": [
+    "Bone_R_Foot"
+   ]
+  }
+ },
+ "bones": {
+  "body": "Bone_Spine3"
+ },
+ "atlas": {
+  "size": 1024,
+  "slot": "Rubber"
+ },
+ "lods": [
+  28000,
+  13300,
+  7100,
+  3750
+ ],
+ "rig_src": {
+  "joints": {
+   "pelvis": [
+    -0.1,
+    1.1,
+    6.08
+   ],
+   "chest": [
+    -0.1,
+    1.1,
+    9.0
+   ],
+   "top": [
+    -0.1,
+    1.1,
+    13.2
+   ],
+   "shoulder_L": [
+    3.0,
+    1.2,
+    9.83
+   ],
+   "elbow_L": [
+    5.8,
+    1.2,
+    9.83
+   ],
+   "wrist_L": [
+    8.6,
+    1.2,
+    9.83
+   ],
+   "handtip_L": [
+    9.5,
+    1.2,
+    9.95
+   ],
+   "shoulder_R": [
+    -3.2,
+    1.2,
+    9.83
+   ],
+   "elbow_R": [
+    -6.0,
+    1.2,
+    9.83
+   ],
+   "wrist_R": [
+    -8.7,
+    1.2,
+    9.83
+   ],
+   "handtip_R": [
+    -9.55,
+    1.2,
+    9.95
+   ],
+   "hip_L": [
+    1.14,
+    1.1,
+    4.7
+   ],
+   "knee_L": [
+    1.14,
+    1.1,
+    3.2
+   ],
+   "ankle_L": [
+    1.14,
+    1.1,
+    0.5
+   ],
+   "toe_L": [
+    1.14,
+    0.1,
+    0.15
+   ],
+   "hip_R": [
+    -1.35,
+    1.1,
+    4.7
+   ],
+   "knee_R": [
+    -1.35,
+    1.1,
+    3.2
+   ],
+   "ankle_R": [
+    -1.35,
+    1.1,
+    0.5
+   ],
+   "toe_R": [
+    -1.35,
+    0.1,
+    0.15
+   ]
+  },
+  "bones": [
+   [
+    "pelvis",
+    "pelvis",
+    "chest",
+    null
+   ],
+   [
+    "body",
+    "chest",
+    "top",
+    "pelvis"
+   ],
+   [
+    "upperarm_L",
+    "shoulder_L",
+    "elbow_L",
+    "body"
+   ],
+   [
+    "forearm_L",
+    "elbow_L",
+    "wrist_L",
+    "upperarm_L"
+   ],
+   [
+    "hand_L",
+    "wrist_L",
+    "handtip_L",
+    "forearm_L"
+   ],
+   [
+    "upperarm_R",
+    "shoulder_R",
+    "elbow_R",
+    "body"
+   ],
+   [
+    "forearm_R",
+    "elbow_R",
+    "wrist_R",
+    "upperarm_R"
+   ],
+   [
+    "hand_R",
+    "wrist_R",
+    "handtip_R",
+    "forearm_R"
+   ],
+   [
+    "thigh_L",
+    "hip_L",
+    "knee_L",
+    "pelvis"
+   ],
+   [
+    "calf_L",
+    "knee_L",
+    "ankle_L",
+    "thigh_L"
+   ],
+   [
+    "foot_L",
+    "ankle_L",
+    "toe_L",
+    "calf_L"
+   ],
+   [
+    "thigh_R",
+    "hip_R",
+    "knee_R",
+    "pelvis"
+   ],
+   [
+    "calf_R",
+    "knee_R",
+    "ankle_R",
+    "thigh_R"
+   ],
+   [
+    "foot_R",
+    "ankle_R",
+    "toe_R",
+    "calf_R"
+   ]
+  ]
+ },
+ "drop_objects": [
+  "Icosphere"
+ ]
+}

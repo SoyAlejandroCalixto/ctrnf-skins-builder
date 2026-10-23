@@ -1,0 +1,237 @@
+{
+ "model": "work/ezio/ezio_src.glb",
+ "rotate_z": 90,
+ "radial_scale": 1.09,
+ "by_position": [
+  "skirt",
+  "belt",
+  "cape"
+ ],
+ "drop_groups": [
+  "cape 1e",
+  "cape 2e",
+  "cape 2f",
+  "cape 3d",
+  "cape 3e",
+  "cape 3f"
+ ],
+ "weld": 1e-05,
+ "atlas": {
+  "slot": "Outfit",
+  "size": 2048
+ },
+ "lods": [
+  15091,
+  8981,
+  8354,
+  4264,
+  2804
+ ],
+ "segments": {
+  "root hips": {
+   "bone": "Bone_Pelvis",
+   "from": [
+    "pelvis",
+    "head neck lower"
+   ],
+   "to": [
+    "Bone_Pelvis",
+    "Bone_Neck"
+   ]
+  },
+  "head neck lower": {
+   "bone": "Bone_Neck",
+   "from": [
+    "head neck lower",
+    "head neck upper"
+   ],
+   "to": [
+    "Bone_Neck",
+    "Bone_Head"
+   ]
+  },
+  "head neck upper": {
+   "bone": "Bone_Head",
+   "rigid": 1.09,
+   "from": [
+    "head neck upper"
+   ],
+   "to": [
+    "Bone_Head"
+   ]
+  },
+  "arm left shoulder 02": {
+   "bone": "Bone_L_UpperArm",
+   "from": [
+    "arm left shoulder 02",
+    "arm left elbow"
+   ],
+   "to": [
+    "Bone_L_UpperArm",
+    "Bone_L_Forearm"
+   ]
+  },
+  "arm left elbow": {
+   "bone": "Bone_L_Forearm",
+   "from": [
+    "arm left elbow",
+    "arm left wrist"
+   ],
+   "to": [
+    "Bone_L_Forearm",
+    "Bone_L_Hand"
+   ]
+  },
+  "arm left wrist": {
+   "bone": "Bone_L_Hand",
+   "rigid": 1.09,
+   "from": [
+    "arm left wrist"
+   ],
+   "to": [
+    "Bone_L_Hand"
+   ],
+   "align_from": [
+    "arm left wrist",
+    "arm left finger 3a"
+   ],
+   "align": [
+    "Bone_L_Hand",
+    "Bone_L_Middle"
+   ]
+  },
+  "leg left thigh": {
+   "bone": "Bone_L_Thigh",
+   "from": [
+    "leg left thigh",
+    "leg left knee"
+   ],
+   "to": [
+    "Bone_L_Thigh",
+    "Bone_L_Calf"
+   ]
+  },
+  "leg left knee": {
+   "bone": "Bone_L_Calf",
+   "from": [
+    "leg left knee",
+    "leg left ankle"
+   ],
+   "to": [
+    "Bone_L_Calf",
+    "Bone_L_Foot"
+   ]
+  },
+  "leg left ankle": {
+   "bone": "Bone_L_Foot",
+   "rigid": 1.09,
+   "from": [
+    "leg left ankle"
+   ],
+   "to": [
+    "Bone_L_Foot"
+   ],
+   "align_from": [
+    "leg left ankle",
+    "leg left toes"
+   ],
+   "align": [
+    "Bone_L_Foot",
+    "Bone_L_Toe0"
+   ]
+  },
+  "arm right shoulder 02": {
+   "bone": "Bone_R_UpperArm",
+   "from": [
+    "arm right shoulder 02",
+    "arm right elbow"
+   ],
+   "to": [
+    "Bone_R_UpperArm",
+    "Bone_R_Forearm"
+   ]
+  },
+  "arm right elbow": {
+   "bone": "Bone_R_Forearm",
+   "from": [
+    "arm right elbow",
+    "arm right wrist"
+   ],
+   "to": [
+    "Bone_R_Forearm",
+    "Bone_R_Hand"
+   ]
+  },
+  "arm right wrist": {
+   "bone": "Bone_R_Hand",
+   "rigid": 1.09,
+   "from": [
+    "arm right wrist"
+   ],
+   "to": [
+    "Bone_R_Hand"
+   ],
+   "align_from": [
+    "arm right wrist",
+    "arm right finger 3a"
+   ],
+   "align": [
+    "Bone_R_Hand",
+    "Bone_R_Middle"
+   ]
+  },
+  "leg right thigh": {
+   "bone": "Bone_R_Thigh",
+   "from": [
+    "leg right thigh",
+    "leg right knee"
+   ],
+   "to": [
+    "Bone_R_Thigh",
+    "Bone_R_Calf"
+   ]
+  },
+  "leg right knee": {
+   "bone": "Bone_R_Calf",
+   "from": [
+    "leg right knee",
+    "leg right ankle"
+   ],
+   "to": [
+    "Bone_R_Calf",
+    "Bone_R_Foot"
+   ]
+  },
+  "leg right ankle": {
+   "bone": "Bone_R_Foot",
+   "rigid": 1.09,
+   "from": [
+    "leg right ankle"
+   ],
+   "to": [
+    "Bone_R_Foot"
+   ],
+   "align_from": [
+    "leg right ankle",
+    "leg right toes"
+   ],
+   "align": [
+    "Bone_R_Foot",
+    "Bone_R_Toe0"
+   ]
+  }
+ },
+ "bones": {
+  "pelvis": "Bone_Pelvis",
+  "spine lower 01": "Bone_Spine1",
+  "spine lower 02": "Bone_Spine2",
+  "spine middle": "Bone_Spine3",
+  "spine upper": "Bone_Spine4",
+  "spine shoulders": "Bone_Spine4",
+  "head neck middle": "Bone_Neck",
+  "arm left shoulder 01": "Bone_L_Clavicle",
+  "arm right shoulder 01": "Bone_R_Clavicle",
+  "leg left toes": "Bone_L_Toe0",
+  "leg right toes": "Bone_R_Toe0"
+ }
+}

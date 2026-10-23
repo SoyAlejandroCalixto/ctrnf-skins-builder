@@ -1,0 +1,204 @@
+{
+ "model": "work/link_src/inner/Link.fbx",
+ "rotate_z": 90,
+ "radial_scale": 1.0,
+ "drop_objects": [
+  "Body__Mt_Body",
+  "Body__Mt_Display",
+  "Body__Mt_Eye",
+  "Body__Mt_OrangeLine",
+  "Eyelashes__Mt_Eyelashes"
+ ],
+ "texture_dirs": [
+  "work/link_src/inner"
+ ],
+ "atlas": {
+  "size": 1024,
+  "slot": "Clothes"
+ },
+ "segments": {
+  "Skl_Root": {
+   "bone": "Bone_Pelvis",
+   "from": [
+    "Skl_Root",
+    "Neck"
+   ],
+   "to": [
+    "Bone_Pelvis",
+    "Bone_Neck"
+   ]
+  },
+  "Head": {
+   "bone": "Bone_Head",
+   "rigid": 1.05,
+   "from": [
+    "Head"
+   ],
+   "to": [
+    "Bone_Head"
+   ]
+  },
+  "Arm_1_L": {
+   "bone": "Bone_L_UpperArm",
+   "from": [
+    "Arm_1_L",
+    "Arm_2_L"
+   ],
+   "to": [
+    "Bone_L_UpperArm",
+    "Bone_L_Forearm"
+   ]
+  },
+  "Arm_2_L": {
+   "bone": "Bone_L_Forearm",
+   "from": [
+    "Arm_2_L",
+    "Wrist_L"
+   ],
+   "to": [
+    "Bone_L_Forearm",
+    "Bone_L_Hand"
+   ]
+  },
+  "Wrist_L": {
+   "bone": "Bone_L_Hand",
+   "rigid": 0.95,
+   "from": [
+    "Wrist_L"
+   ],
+   "to": [
+    "Bone_L_Hand"
+   ],
+   "align_from": [
+    "Wrist_L",
+    "Finger_C_1_L"
+   ],
+   "align": [
+    "Bone_L_Hand",
+    "Bone_L_Middle"
+   ]
+  },
+  "Leg_1_L": {
+   "bone": "Bone_L_Thigh",
+   "from": [
+    "Leg_1_L",
+    "Leg_2_L"
+   ],
+   "to": [
+    "Bone_L_Thigh",
+    "Bone_L_Calf"
+   ]
+  },
+  "Leg_2_L": {
+   "bone": "Bone_L_Calf",
+   "from": [
+    "Leg_2_L",
+    "Ankle_L"
+   ],
+   "to": [
+    "Bone_L_Calf",
+    "Bone_L_Foot"
+   ]
+  },
+  "Ankle_L": {
+   "bone": "Bone_L_Foot",
+   "rigid": 1.0,
+   "from": [
+    "Ankle_L"
+   ],
+   "to": [
+    "Bone_L_Foot"
+   ]
+  },
+  "Arm_1_R": {
+   "bone": "Bone_R_UpperArm",
+   "from": [
+    "Arm_1_R",
+    "Arm_2_R"
+   ],
+   "to": [
+    "Bone_R_UpperArm",
+    "Bone_R_Forearm"
+   ]
+  },
+  "Arm_2_R": {
+   "bone": "Bone_R_Forearm",
+   "from": [
+    "Arm_2_R",
+    "Wrist_R"
+   ],
+   "to": [
+    "Bone_R_Forearm",
+    "Bone_R_Hand"
+   ]
+  },
+  "Wrist_R": {
+   "bone": "Bone_R_Hand",
+   "rigid": 0.95,
+   "from": [
+    "Wrist_R"
+   ],
+   "to": [
+    "Bone_R_Hand"
+   ],
+   "align_from": [
+    "Wrist_R",
+    "Finger_C_1_R"
+   ],
+   "align": [
+    "Bone_R_Hand",
+    "Bone_R_Middle"
+   ]
+  },
+  "Leg_1_R": {
+   "bone": "Bone_R_Thigh",
+   "from": [
+    "Leg_1_R",
+    "Leg_2_R"
+   ],
+   "to": [
+    "Bone_R_Thigh",
+    "Bone_R_Calf"
+   ]
+  },
+  "Leg_2_R": {
+   "bone": "Bone_R_Calf",
+   "from": [
+    "Leg_2_R",
+    "Ankle_R"
+   ],
+   "to": [
+    "Bone_R_Calf",
+    "Bone_R_Foot"
+   ]
+  },
+  "Ankle_R": {
+   "bone": "Bone_R_Foot",
+   "rigid": 1.0,
+   "from": [
+    "Ankle_R"
+   ],
+   "to": [
+    "Bone_R_Foot"
+   ]
+  }
+ },
+ "bones": {
+  "Waist": "Bone_Pelvis",
+  "Spine_1": "Bone_Spine2",
+  "Spine_2": "Bone_Spine4",
+  "Neck": "Bone_Neck",
+  "Toe_L": "Bone_L_Toe0",
+  "Clavicle_L": "Bone_L_Clavicle",
+  "Clavicle_Assist_L": "Bone_L_Clavicle",
+  "Skirt_1_FL_Armor": "Bone_L_Thigh",
+  "Skirt_2_FL_Armor": "Bone_L_Thigh",
+  "Skirt_3_FL_Armor": "Bone_L_Thigh",
+  "Toe_R": "Bone_R_Toe0",
+  "Clavicle_R": "Bone_R_Clavicle",
+  "Clavicle_Assist_R": "Bone_R_Clavicle",
+  "Skirt_1_FR_Armor": "Bone_R_Thigh",
+  "Skirt_2_FR_Armor": "Bone_R_Thigh",
+  "Skirt_3_FR_Armor": "Bone_R_Thigh"
+ }
+}

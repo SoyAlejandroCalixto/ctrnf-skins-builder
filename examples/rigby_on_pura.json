@@ -1,0 +1,341 @@
+{
+ "model": "work/rigby/src/source/Rigby.fbx",
+ "rotate_z": 90,
+ "radial_scale": 2.0,
+ "images": {
+  "MI_PromDutch_Pet_63ac0d93": "work/rigby/src/textures/T_PromDutch_Pet_CS.png"
+ },
+ "segments": {
+  "pelvis": {
+   "bone": "Bone_Pelvis",
+   "from": [
+    "pelvis",
+    "neck_01"
+   ],
+   "to": [
+    "Bone_Pelvis",
+    "Bone_Neck"
+   ],
+   "radial": 2.4,
+   "offset": [
+    0,
+    0,
+    -0.12
+   ]
+  },
+  "head": {
+   "bone": "Bone_Neck",
+   "rigid": 2.2,
+   "from": [
+    "head"
+   ],
+   "to": [
+    "Bone_Neck"
+   ],
+   "align_from": [
+    "pelvis",
+    "head"
+   ],
+   "align": [
+    "Bone_Pelvis",
+    "Bone_Neck"
+   ],
+   "offset": [
+    0,
+    0,
+    -0.12
+   ]
+  },
+  "upperarm_l": {
+   "bone": "Bone_L_Thigh",
+   "from": [
+    "upperarm_l",
+    "lowerarm_l"
+   ],
+   "to": [
+    "Bone_L_Thigh",
+    "Bone_L_Calf"
+   ],
+   "radial": 3.2
+  },
+  "lowerarm_l": {
+   "bone": "Bone_L_Calf",
+   "from": [
+    "lowerarm_l",
+    "hand_l"
+   ],
+   "to": [
+    "Bone_L_Calf",
+    "Bone_L_Foot"
+   ],
+   "radial": 3.2
+  },
+  "hand_l": {
+   "bone": "Bone_L_Foot",
+   "rigid": 3.6,
+   "from": [
+    "hand_l"
+   ],
+   "to": [
+    "Bone_L_Foot"
+   ],
+   "align_from": [
+    "hand_l",
+    "middle_01_l"
+   ],
+   "align": [
+    "Bone_L_Foot",
+    "Bone_L_Toe0"
+   ],
+   "roll_from": [
+    "index_01_l",
+    "pinky_01_l"
+   ],
+   "roll": [
+    "Bone_L_04_FrontToe",
+    "Bone_L_FrontToe"
+   ]
+  },
+  "thigh_l": {
+   "bone": "Bone_L_Thigh2",
+   "from": [
+    "thigh_l",
+    "calf_l"
+   ],
+   "to": [
+    "Bone_L_Thigh2",
+    "Bone_L_Calf2"
+   ],
+   "radial": 3.2
+  },
+  "calf_l": {
+   "bone": "Bone_L_Calf2",
+   "from": [
+    "calf_l",
+    "foot_l"
+   ],
+   "to": [
+    "Bone_L_Calf2",
+    "Bone_L_Foot2"
+   ],
+   "radial": 3.2
+  },
+  "foot_l": {
+   "bone": "Bone_L_Foot2",
+   "rigid": 2.6,
+   "from": [
+    "foot_l"
+   ],
+   "to": [
+    "Bone_L_Foot2"
+   ],
+   "align_from": [
+    "foot_l",
+    "ball_l"
+   ],
+   "align": [
+    "Bone_L_Foot2",
+    "Bone_L_Toe02"
+   ]
+  },
+  "upperarm_r": {
+   "bone": "Bone_R_Thigh",
+   "from": [
+    "upperarm_r",
+    "lowerarm_r"
+   ],
+   "to": [
+    "Bone_R_Thigh",
+    "Bone_R_Calf"
+   ],
+   "radial": 3.2
+  },
+  "lowerarm_r": {
+   "bone": "Bone_R_Calf",
+   "from": [
+    "lowerarm_r",
+    "hand_r"
+   ],
+   "to": [
+    "Bone_R_Calf",
+    "Bone_R_Foot"
+   ],
+   "radial": 3.2
+  },
+  "hand_r": {
+   "bone": "Bone_R_Foot",
+   "rigid": 3.6,
+   "from": [
+    "hand_r"
+   ],
+   "to": [
+    "Bone_R_Foot"
+   ],
+   "align_from": [
+    "hand_r",
+    "middle_01_r"
+   ],
+   "align": [
+    "Bone_R_Foot",
+    "Bone_R_Toe0"
+   ],
+   "roll_from": [
+    "index_01_r",
+    "pinky_01_r"
+   ],
+   "roll": [
+    "Bone_R_04_FrontToe",
+    "Bone_R_FrontToe"
+   ]
+  },
+  "thigh_r": {
+   "bone": "Bone_R_Thigh2",
+   "from": [
+    "thigh_r",
+    "calf_r"
+   ],
+   "to": [
+    "Bone_R_Thigh2",
+    "Bone_R_Calf2"
+   ],
+   "radial": 3.2
+  },
+  "calf_r": {
+   "bone": "Bone_R_Calf2",
+   "from": [
+    "calf_r",
+    "foot_r"
+   ],
+   "to": [
+    "Bone_R_Calf2",
+    "Bone_R_Foot2"
+   ],
+   "radial": 3.2
+  },
+  "foot_r": {
+   "bone": "Bone_R_Foot2",
+   "rigid": 2.6,
+   "from": [
+    "foot_r"
+   ],
+   "to": [
+    "Bone_R_Foot2"
+   ],
+   "align_from": [
+    "foot_r",
+    "ball_r"
+   ],
+   "align": [
+    "Bone_R_Foot2",
+    "Bone_R_Toe02"
+   ]
+  },
+  "tail_01": {
+   "bone": "Bone_Tail",
+   "radial": 2.2,
+   "from": [
+    "tail_01",
+    "tail_02"
+   ],
+   "to": [
+    "Bone_Tail",
+    "Bone_TailB"
+   ]
+  },
+  "tail_02": {
+   "bone": "Bone_TailB",
+   "radial": 2.2,
+   "from": [
+    "tail_02",
+    "tail_03"
+   ],
+   "to": [
+    "Bone_TailB",
+    "Bone_TailC"
+   ]
+  },
+  "tail_03": {
+   "bone": "Bone_TailC",
+   "radial": 2.2,
+   "from": [
+    "tail_03",
+    "tail_04"
+   ],
+   "to": [
+    "Bone_TailC",
+    "Bone_TailD"
+   ]
+  },
+  "tail_04": {
+   "bone": "Bone_TailD",
+   "radial": 2.2,
+   "from": [
+    "tail_04",
+    "tail_05"
+   ],
+   "to": [
+    "Bone_TailD",
+    "Bone_TailE"
+   ]
+  },
+  "tail_05": {
+   "bone": "Bone_TailE",
+   "rigid": 2.0,
+   "from": [
+    "tail_05"
+   ],
+   "to": [
+    "Bone_TailE"
+   ],
+   "align_from": [
+    "tail_04",
+    "tail_05"
+   ],
+   "align": [
+    "Bone_TailD",
+    "Bone_TailE"
+   ]
+  }
+ },
+ "bones": {
+  "spine_01": "Bone_Spine1",
+  "spine_02": "Bone_Spine1",
+  "spine_03": "Bone_Spine2",
+  "spine_04": "Bone_Spine2",
+  "spine_05": "Bone_Spine2",
+  "neck_01": "Bone_Neck",
+  "neck_02": "Bone_Neck",
+  "clavicle_l": "Bone_Spine2",
+  "ball_l": "Bone_L_Toe02",
+  "clavicle_r": "Bone_Spine2",
+  "ball_r": "Bone_R_Toe02",
+  "index_01_l": "Bone_L_Toe0",
+  "index_02_l": "Bone_L_Toe0",
+  "index_03_l": "Bone_L_Toe0",
+  "middle_01_l": "Bone_L_Toe0",
+  "middle_02_l": "Bone_L_Toe0",
+  "middle_03_l": "Bone_L_Toe0",
+  "pinky_01_l": "Bone_L_Toe0",
+  "pinky_02_l": "Bone_L_Toe0",
+  "pinky_03_l": "Bone_L_Toe0",
+  "index_01_r": "Bone_R_Toe0",
+  "index_02_r": "Bone_R_Toe0",
+  "index_03_r": "Bone_R_Toe0",
+  "middle_01_r": "Bone_R_Toe0",
+  "middle_02_r": "Bone_R_Toe0",
+  "middle_03_r": "Bone_R_Toe0",
+  "pinky_01_r": "Bone_R_Toe0",
+  "pinky_02_r": "Bone_R_Toe0",
+  "pinky_03_r": "Bone_R_Toe0"
+ },
+ "atlas": {
+  "size": 1024,
+  "slot": "PuraDriver_Body"
+ },
+ "lods": [
+  10000,
+  8200,
+  8000,
+  4100
+ ]
+}
