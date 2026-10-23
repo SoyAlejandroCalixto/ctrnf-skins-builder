@@ -35,7 +35,7 @@ memorias de Claude Code sobre este proyecto: lo que valga para todos va aquí; l
 | `tools/lib/` | Copia de scripts del launcher OCTR que usan las herramientas (lector PAK, validador `mod.json`). |
 | `tools/ui_mod.py` | `names` (mod "Nombres de pilotos"), `portrait` (se añade a un mod ya hecho), `merge`, `repack`. Tabla `UI`. |
 | `tools/check_launcher.py` | Simula la preparación de mods del launcher (sin abrir el juego). |
-| `tools/blender/` | Inspección/revisión en Blender: `inspect.py`, `mats.py`, `seated.py`, `closeup2.py`, `xps_import.py`… |
+| `tools/blender/` | Inspección/revisión en Blender: `inspect.py`, `mats.py`, `seated.py`, `closeup2.py`, `xps_import.py`. |
 | `tools/unzip.py` | Extrae zips de forma segura (rechaza rutas `..`). |
 | `examples/*.json` | `fit.json` de referencia por tipo de modelo. Su `"model"` apunta a rutas viejas: cámbialo. |
 | `work/` | Trabajo por modelo: `work/<nombre>/src`, `fit.json`, salidas `.glb`/`.png`, renders; fuentes de mods en `work/mods/`. |
@@ -83,21 +83,21 @@ material del cuerpo; evita los metálicos/pelo/fur). Añade la entrada con `char
    - esqueleto propio normal (FBX/Valve/BotW): `gordon_on_hunter.json`, `link_on_tawna.json`;
    - piezas rígidas tipo N64: `mario_on_crash.json`;
    - escaneo sin esqueleto: `vaultboy_on_coco.json` (+ `vaultboy_joints_reference.json`);
-   - rip de Fortnite (triángulos sueltos, esqueleto UE): `finn_on_geary.json`;
    - esqueleto estilo Mixamo (`Hips`, `LeftArm`...), párpados cerrados: `sonic_on_cortex.json`;
    - bípedo sobre cuadrúpedo (Pura): `rigby_on_pura.json`;
    - malla sin esqueleto con pesos hechos por zonas: `jake_on_geary.json` + `jake_rig_weights.py`;
-   - XNALara/XPS (`.mesh` + `.pose`, huesos tipo `arm left elbow`): `ezio_on_megumi.json` /
-     `ezio_on_pasadena.json` (los escriben sus `*_make_fit.py`). Convierte antes a glb con
+   - XNALara/XPS (`.mesh` + `.pose`, huesos tipo `arm left elbow`), con capa: `ezio_on_pasadena.json`.
+     Convierte antes a glb con
      `"$B" -b --factory-startup --python tools/blender/xps_import.py -- <x.mesh> <out.glb> '<regex de grupos>'`
-     (p. ej. `'^24_(\+|Body|Head)'`). Opciones: `'--cut=<malla> :<altura>'` corta en recto,
-     `'--unweight=<malla> :<hueso>,<hueso>'` quita pesos. En rips XPS de Fortnite el grupo 27 son
+     (p. ej. `'^24_(\+|Body|Head)'`). Opciones: `'--cut=<prefijo de hueso>:<altura>'` corta en
+     recto, `'--unweight=<prefijo>:<hueso>,<hueso>'` quita pesos. En rips XPS de Fortnite el grupo 27 son
      duplicados de reflejo y `-` piezas ocultas; el alfa de `_D.tga` es máscara (el importador lo quita).
      Fortnite: `"weld": 0.00001`. Tamaño = altura del piloto / altura del modelo, con grosor y piezas
      rígidas a la misma escala (proporciones normales).
 6. **Ajustar**: `"$B" -b --factory-startup --python tools/blender_fit.py -- work/<piloto>.glb work/<n>/fit.json work/<n>/<n>.glb work/<n>/renders`
    Mira los renders (`front/side/quarter_model.png` vs `_game.png`) con la herramienta Read,
    sentado en el kart con `tools/blender/seated.py -- <out_lod0.glb> <atlas.png> <out.png> side|quarter|back`
+   (sin caras traseras, como el juego)
    y primeros planos con `tools/blender/closeup2.py -- <glb> <atlas.png> <out.png> <ortho> "(x,y,z)" TEXTURE`.
    Itera escalas/anclajes hasta que se vea bien. Manda los renders al usuario antes de construir.
 7. **Construir**: `python -I tools/character_mod.py build <piloto> "$A" work/<n>/<n>.glb work/mods/<Nombre del mod> --texture=<Slot>=work/<n>/<n>.png --flat=normal --flat=composite [--flat=emission]`
@@ -152,13 +152,18 @@ material del cuerpo; evita los metálicos/pelo/fur). Añade la entrada con `char
   caras y deja ver el globo ocular. Pupila transparente (alfa) → el atlas la pinta sobre el color
   base del material: `"base_colors"` con negro. Los renders `*_model.png` usan los materiales
   originales; para ver el atlas usa `closeup2.py` (con rutas absolutas).
-- **Capas y capas de tela** (capas, gabardinas, faldas largas): sentado, la pelvis se hunde y se echa
-  atrás (`seated.py` no lo reproduce), así que lo que baja de la cadera atraviesa el kart. Córtalas
-  en recto a la altura del cinturón al importar (`--cut`); cortarlas por huesos con `drop_groups`
-  deja cada capa de tela a una altura distinta (tiras de colores). Lo que queda, pesado a
-  `Bone_Spine*`. Si un brazo dobla la capa al ir al volante: `--unweight` de esos huesos.
-- **Capas de tela dobles** (exterior + forro de otro color): al reducir se cruzan y asoma el forro;
-  pinta el forro del color de fuera en una copia de las fuentes (ver `examples/ezio_white_hood.py`).
+- **Capas** (también colas de fajín y tela que cuelga de la espalda): no se cortan; van como parte
+  de la espalda, como la capa de plástico de un muñeco. `"drape": {"bones": ["cape", "belt"]}`
+  (prefijos de sus huesos): arriba sigue la columna, bajo la cadera pasa suave al muslo de su lado
+  (`"hip"`) y en la rodilla a la pantorrilla (`"knee"`), solo por altura, así que sentado queda bajo
+  las piernas sin romperse ni arrugarse; los pesos que el rip pone al brazo en el borde se ignoran
+  (`"seam"`: desde esa parte de peso a la capa, 0.05, el vértice es todo capa). Si atraviesa el
+  respaldo al respirar (el piloto se echa atrás), `"inset": 0.05` la acerca a la espalda baja sin
+  meterla en el cuerpo. La tela `"drape"` no se reduce en los LODs (el forro asomaría por fuera).
+  Revisa con `seated.py` `side`/`back`. Cortar con `--cut` a la altura del cinturón solo si el
+  usuario lo pide.
+- **Capas de tela dobles** fuera de `"drape"` (exterior + forro de otro color): al reducir se
+  cruzan y asoma el forro; pinta el forro del color de fuera en una copia de las fuentes.
 - **Huesos de ropa sin asignar** (cuellos, solapas, piezas colgadas del pecho): heredan la
   asignación de `"bones"` de su antepasado más cercano (`weight_target` en `blender_fit`). Si algo
   se estira hasta el asiento al sentarse, busca vértices con peso a un hueso lejano.

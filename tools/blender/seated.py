@@ -3,8 +3,8 @@ that only show up seated (a cape through the floor).
 
     blender -b --python tools/blender/seated.py -- model.glb atlas.png out.png [view: side|back|quarter]
 
-Thighs turned to point forward, calves back down, upper arms forward to the wheel. The game
-faces +X, left is +Y.
+Thighs turned to point forward, calves forward-down to the pedals, upper arms forward to the
+wheel. The game faces +X, left is +Y.
 """
 import math
 import sys
@@ -42,7 +42,7 @@ def turn(name, axis, degrees):
 
 for s in 'LR':
     turn(f'Bone_{s}_Thigh', 'Y', -85)   # thigh forward (down -> +X)
-    turn(f'Bone_{s}_Calf', 'Y', 80)     # calf back down
+    turn(f'Bone_{s}_Calf', 'Y', 45)     # calf down and forward, as on the pedals
     turn(f'Bone_{s}_UpperArm', 'Y', -45)
 bpy.context.view_layer.update()
 bpy.ops.object.mode_set(mode='OBJECT')
@@ -50,6 +50,7 @@ bpy.ops.object.mode_set(mode='OBJECT')
 sc = bpy.context.scene
 sc.render.engine = 'BLENDER_WORKBENCH'
 sc.display.shading.color_type = 'TEXTURE'
+sc.display.shading.show_backface_culling = True  # as the game: a lining poking through shows
 sc.render.resolution_x = sc.render.resolution_y = 600
 sc.world = bpy.data.worlds.new('w')
 cam = bpy.data.objects.new('c', bpy.data.cameras.new('c'))

@@ -19,6 +19,9 @@ reference.glb comes from `character_mod.py export`. fit.json:
      "attach": {"pack": "spine_05"},             # optional: parent bones of a separate armature
      "by_position": ["dfrm_"],                   # optional: bones (by name prefix) that take
                                                  # the part nearest to them
+     "drape": {"bones": ["cape", "belt"],        # optional: cloth (by bone name prefix) that
+               "inset": 0.05},                   # bends with the back and legs by height only, kept
+                                                 # whole in reduced levels of detail ("drape" comment)
      "decals": [{"object", "image", "crop",      # optional: paint images (a face) onto a mesh's
                  "center", "size"}],             # texture, projected from the front
      "rig": {"joints": {"name": [x, y, z]},      # optional, for a model with no armature: joints
@@ -543,8 +546,14 @@ if drop_groups:
     bm.to_mesh(mesh.data)
     bm.free()
 
+drape = fit.get('drape', {})
+drape_bones = tuple(drape.get('bones', ())) or ('\x00',)  # no prefix: nothing draped
+
+
 group_names = {g.index: g.name for g in mesh.vertex_groups}
 targets = {}
+draped = {}  # vertex -> share of its weight on "drape" bones
+draped_side = {}  # vertex -> > 0 left
 unplaced = 0
 lost = set()
 for v in mesh.data.vertices:
@@ -559,11 +568,16 @@ for v in mesh.data.vertices:
     co = v.co.copy()
     pos = Vector((0, 0, 0))
     for w, name in infl:
-        seg = segment_of(name)
-        pos += (w / total) * (placements[seg] @ co)
+        pos += (w / total) * (placements[segment_of(name)] @ co)
+    for w, name in infl:
         bone = weight_target(name)
         targets.setdefault(bone, {})
         targets[bone][v.index] = targets[bone].get(v.index, 0) + w / total
+        if name.startswith(drape_bones):
+            draped[v.index] = draped.get(v.index, 0) + w / total
+            # Side of the bone's joint (a cape's chain of bones hangs on one side).
+            side_y = (placements[segment_of(name)] @ model_joint[name]).y
+            draped_side[v.index] = draped_side.get(v.index, 0) + w * (1 if side_y > 0 else -1)
     v.co = pos
 if unplaced:
     chains = {b: [b] for b in sorted(lost)}
@@ -572,6 +586,94 @@ if unplaced:
             chain.append(model_parent[chain[-1]])
     sys.exit(f'{unplaced} vertices have no weight to a placed bone; their bones and parents: '
              + '; '.join(' < '.join(c) for c in chains.values()))
+if draped:
+    # "drape": cloth (a cape) bending with the body as a doll's plastic cape would, its weights
+    # by height only: the spine ("spine": game bones, top down, blended between their joints'
+    # heights), then the thigh of its side over "hip" metres [above, below the hip joint] and the
+    # calf over "knee" metres either side of the knee, each change smooth. By height only, the
+    # two layers of the cloth and neighbouring vertices bend alike and it stays a smooth sheet
+    # (rips also weight a cape's edge to the arm, which pulls and crumples it at the wheel). A
+    # vertex takes these weights by its share of cloth bones, all of them from "seam" up.
+    def smooth(a, b, x):
+        t = max(0.0, min(1.0, (x - a) / (b - a)))
+        return t * t * (3 - 2 * t)
+    up, down = drape.get('hip', [0.04, 0.14])
+    knee_band = drape.get('knee', 0.1)
+    spine = [(game_joint[b].z, b) for b in drape.get('spine', ['Bone_Spine4', 'Bone_Spine3', 'Bone_Spine2',
+                                                                'Bone_Pelvis'])]
+
+    def along_spine(z):
+        if z >= spine[0][0]:
+            return {spine[0][1]: 1.0}
+        for (z0, b0), (z1, b1) in zip(spine, spine[1:]):
+            if z >= z1:
+                t = smooth(z0, z1, z)
+                return {b0: 1 - t, b1: t}
+        return {spine[-1][1]: 1.0}
+
+    verts = mesh.data.vertices
+    cloth_of = {vi: min(1.0, share / drape.get('seam', 0.05)) for vi, share in draped.items()}
+    if drape.get('inset'):
+        # "inset": the cloth moved forward (+X, towards the back it hangs behind) by up to that
+        # much, short of the body by "margin", so it clears the seat's back when the driver leans
+        # back (breathing). The move is the same through the cloth's thickness (both layers by the
+        # least room at their place, across Y-Z) and smoothed along it, so the layers do not
+        # cross and the sheet stays smooth.
+        from mathutils.kdtree import KDTree
+        inset, margin = drape['inset'], drape.get('margin', 0.012)
+        # Only on the lower back ("inset_heights": full below the first game joint, none above
+        # the second), where the seat's back is: higher up the upper arm, reaching for the wheel,
+        # goes through cloth brought next to it.
+        low, high = (game_joint[b].z for b in drape.get('inset_heights', ['Bone_Spine2', 'Bone_Spine3']))
+
+        def inset_part(z):
+            return 1 - smooth(low, high, z)
+        body = [v.index for v in verts if cloth_of.get(v.index, 0) < 0.01]
+        body_tree = KDTree(len(body))
+        for k, vi in enumerate(body):
+            body_tree.insert(verts[vi].co, k)
+        body_tree.balance()
+        room = {}
+        for vi in cloth_of:
+            p = verts[vi].co
+            r = inset
+            for q, _, _ in body_tree.find_range(p, inset + margin + 0.04):
+                if q.x > p.x - margin and Vector((0, q.y - p.y, q.z - p.z)).length < 0.03:
+                    r = min(r, q.x - p.x - margin)
+            room[vi] = max(0.0, r)
+        flat = KDTree(len(cloth_of))
+        order = list(cloth_of)
+        for k, vi in enumerate(order):
+            co = verts[vi].co
+            flat.insert((0, co.y, co.z), k)
+        flat.balance()
+        move = {vi: min(room[order[k]] for _, k, _ in flat.find_range((0, verts[vi].co.y, verts[vi].co.z), 0.02))
+                * cloth_of[vi] * inset_part(verts[vi].co.z) for vi in order}
+        edges = [(a, b) for a, b in (e.vertices for e in mesh.data.edges) if a in move and b in move]
+        for _ in range(drape.get('inset_smooth', 6)):
+            total, count = dict(move), {vi: 1 for vi in move}
+            for a, b in edges:
+                total[a] += move[b]; count[a] += 1
+                total[b] += move[a]; count[b] += 1
+            move = {vi: min(room[vi], total[vi] / count[vi]) for vi in move}
+        for vi, m in move.items():
+            verts[vi].co.x += m
+        print('drape inset: moved', len(move), 'vertices, mean', round(sum(move.values()) / len(move), 4))
+    for vi, t in cloth_of.items():
+        z = verts[vi].co.z
+        side = 'L' if draped_side[vi] > 0 else 'R'
+        hip, knee = game_joint[f'Bone_{side}_Thigh'].z, game_joint[f'Bone_{side}_Calf'].z
+        leg = smooth(hip + up, hip - down, z)
+        calf = smooth(knee + knee_band, knee - knee_band, z)
+        cloth = {bone: (1 - leg) * w for bone, w in along_spine(z).items()}
+        for bone, w in ((f'Bone_{side}_Thigh', leg * (1 - calf)), (f'Bone_{side}_Calf', leg * calf)):
+            cloth[bone] = cloth.get(bone, 0) + w
+        own = {bone: ws.pop(vi) for bone, ws in targets.items() if vi in ws}
+        for bone in set(own) | set(cloth):
+            w = (1 - t) * own.get(bone, 0) + t * cloth.get(bone, 0)
+            if w > 0:
+                targets.setdefault(bone, {})[vi] = w
+drape_count = len(mesh.data.vertices)  # reduced() keeps draped vertices while it can
 for g in list(mesh.vertex_groups):
     mesh.vertex_groups.remove(g)
 for bone, weights in targets.items():
@@ -830,7 +932,49 @@ bpy.ops.export_scene.gltf(filepath=out_path, export_format='GLB', export_skins=T
                           export_animations=False, export_yup=True, use_selection=False)
 
 
+def exported_count(obj):
+    """Vertices as exported: glTF (and the game) split a vertex once per distinct UV."""
+    uv = obj.data.uv_layers.active.data
+    return len({(l.vertex_index, round(uv[l.index].uv[0], 6), round(uv[l.index].uv[1], 6))
+                for l in obj.data.loops})
+
+
 def reduced(source, target):
+    """reduced_mesh(), the draped cloth ("drape") kept whole while it is under half the target:
+    its two layers (outside and lining) lie a few millimetres apart, and collapsed they cross
+    and the lining shows through the outside in patches."""
+    if not (source is mesh and draped and len(source.data.vertices) == drape_count):
+        return reduced_mesh(source, target)
+    import bmesh
+
+    def part(cloth):
+        o = source.copy()
+        o.data = source.data.copy()
+        bpy.context.scene.collection.objects.link(o)
+        bm = bmesh.new()
+        bm.from_mesh(o.data)
+        bm.verts.ensure_lookup_table()
+        faces = [f for f in bm.faces if all(v.index in draped for v in f.verts) != cloth]
+        bmesh.ops.delete(bm, geom=faces, context='FACES')
+        bmesh.ops.delete(bm, geom=[v for v in bm.verts if not v.link_faces], context='VERTS')
+        bm.to_mesh(o.data)
+        bm.free()
+        return o
+
+    cloth = part(True)
+    n = exported_count(cloth)
+    if n > target / 2:
+        bpy.data.objects.remove(cloth)
+        return reduced_mesh(source, target)
+    rest = part(False)
+    obj = reduced_mesh(rest, target - n)
+    bpy.data.objects.remove(rest)
+    with bpy.context.temp_override(active_object=obj, selected_editable_objects=[obj, cloth]):
+        bpy.ops.object.join()
+    return obj
+
+
+def reduced_mesh(source, target):
     """A copy of the mesh with about `target` vertices. The collapse keeps the surface closed
     but blends UVs across island borders, so each face then takes its UVs again from the
     original surface: from the one original triangle nearest to its centre, extended to its
@@ -864,10 +1008,7 @@ def reduced(source, target):
     keep = obj.vertex_groups.new(name='_seams')
     keep.add(list(seam), 1.0, 'REPLACE')
     def exported():
-        """Vertices as exported: glTF (and the game) split a vertex once per distinct UV."""
-        uv = obj.data.uv_layers.active.data
-        return len({(l.vertex_index, round(uv[l.index].uv[0], 6), round(uv[l.index].uv[1], 6))
-                    for l in obj.data.loops})
+        return exported_count(obj)
 
     # The collapse slows down near borders and seams: repeat while it still makes progress.
     for protect in (True, False):
@@ -878,7 +1019,8 @@ def reduced(source, target):
             mod = obj.modifiers.new('decimate', 'DECIMATE')
             mod.ratio = max(0.05, 0.97 * target / count)
             if protect:
-                mod.vertex_group, mod.invert_vertex_group, mod.vertex_group_factor = keep.name, True, 10
+                # By name: the group's Python reference goes stale once a modifier is applied.
+                mod.vertex_group, mod.invert_vertex_group, mod.vertex_group_factor = '_seams', True, 10
             with bpy.context.temp_override(object=obj, active_object=obj):
                 bpy.ops.object.modifier_move_to_index(modifier=mod.name, index=0)
                 bpy.ops.object.modifier_apply(modifier=mod.name)
