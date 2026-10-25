@@ -23,7 +23,7 @@
         average (G gloss, B metal: Geary's metal is 0,131,112; a matte body 0,60,0 like Crash).
 
 <character> is one of CHARACTERS; <game archives> is the game's archives folder, e.g.
-...\\CUSA14876-1.21\\archives.
+...\\CUSA13795-1.21\\archives.
 """
 import sys
 from pathlib import Path
@@ -96,11 +96,21 @@ CHARACTERS = {
                         'DriverMegumi_Outfit_Default_skins.pak', 'DriverMegumi_Outfit_Default_Cutscene_skins.pak',
                         'materialinstances/Actors/Octane/Characters/Megumi_materials.igz',
                         'DriverMegumi_Outfit_Default_materials.pak', 'Outfit'),
+    # Isabella (Nitro Squad): archives in update.pak; Boots shares the Outfit image.
+    'isabella': character('actors_stripped/Drivers/Isabella_Lod{n}_stripped.igz',
+                          'DriverIsabella_Outfit_Default_skins.pak', 'DriverIsabella_Outfit_Default_Cutscene_skins.pak',
+                          'materialinstances/Actors/Octane/Characters/Isabella_materials.igz',
+                          'DriverIsabella_Outfit_Default_materials.pak', 'Outfit'),
     # Pasadena O'Possum, internally POM: archives in update2.pak.
     'pasadena': character('actors_stripped/Drivers/DriverPOM_Lod{n}_stripped.igz',
                           'DriverPOM_Outfit_Default_Skins.pak', 'DriverPOM_Outfit_Default_Cutscene_Skins.pak',
                           'materialinstances/Actors/Octane/Characters/GP5_Driver_POM_materials.igz',
                           'DriverPOM_Outfit_Default_materials.pak', 'UpperBody'),
+    # Nitrus Brio: models are DriverNBO, materials DriverNBrio; archives in update2.pak.
+    'brio': character('actors_stripped/Drivers/DriverNBO_lod{n}_stripped.igz',
+                      'DriverNBO_Outfit_Default_Skins.pak', 'DriverNBO_Outfit_Default_Cutscene_Skins.pak',
+                      'materialinstances/NBrio_materials.igz',
+                      'DriverNBrio_Outfit_Default_materials.pak', 'NBrio'),
 }
 
 

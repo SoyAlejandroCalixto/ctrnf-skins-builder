@@ -1,0 +1,20 @@
+{
+  "model": "work/rayman/rayman_rigged.glb",
+  "rotate_z": 90,
+  "radial_scale": 1.0,
+  "texture_dirs": ["work/rayman/src/textures"],
+  "atlas": {"size": 1024, "slot": "NBrio"},
+  "segments": {
+    "pelvis": {"bone": "Bone_Pelvis", "from": ["pelvis", "head"], "to": ["Bone_Pelvis", "Bone_Neck"]},
+    "chest": {"bone": "Bone_Spine4", "from": ["pelvis", "head"], "to": ["Bone_Pelvis", "Bone_Neck"]},
+    "head": {"bone": "Bone_Head", "rigid": 1.1, "from": ["head"], "to": ["Bone_Neck"]},
+    "hand_L": {"bone": "Bone_L_Hand", "rigid": 0.8, "from": ["hand_L"], "to": ["Bone_L_Hand"],
+               "align_from": ["hand_L", "handtip_L"], "align": ["Bone_L_Hand", "Bone_L_Middle"]},
+    "hand_R": {"bone": "Bone_R_Hand", "rigid": 0.8, "from": ["hand_R"], "to": ["Bone_R_Hand"],
+               "align_from": ["hand_R", "handtip_R"], "align": ["Bone_R_Hand", "Bone_R_Middle"]},
+    "foot_L": {"bone": "Bone_L_Foot", "rigid": 0.7, "from": ["foot_L"], "to": ["Bone_L_Foot"],
+               "align_from": ["foot_L", "toe_L"], "align": ["Bone_L_Foot", "Bone_L_Toe0"]},
+    "foot_R": {"bone": "Bone_R_Foot", "rigid": 0.7, "from": ["foot_R"], "to": ["Bone_R_Foot"],
+               "align_from": ["foot_R", "toe_R"], "align": ["Bone_R_Foot", "Bone_R_Toe0"]}
+  }
+}

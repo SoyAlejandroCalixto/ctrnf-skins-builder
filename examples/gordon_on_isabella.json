@@ -1,13 +1,13 @@
 {
- "model": "work/gordon_src/Gordon/Gordon.fbx",
+ "model": "work/gordon/src/inner/Gordon/Gordon.fbx",
  "rotate_z": 90,
- "radial_scale": 0.02,
+ "radial_scale": 0.0285,
  "texture_dirs": [
-  "work/downloads/half-life-2-survivor-gordon-freeman/textures"
+  "work/gordon/src/inner/Gordon"
  ],
  "atlas": {
   "size": 1024,
-  "slot": "Body"
+  "slot": "Outfit"
  },
  "segments": {
   "ValveBiped_Bip01_Pelvis": {
@@ -23,12 +23,12 @@
   },
   "ValveBiped_Bip01_Head1": {
    "bone": "Bone_Head",
-   "rigid": 0.026,
+   "rigid": 0.0285,
    "from": [
     "ValveBiped_Bip01_Head1"
    ],
    "to": [
-    "Bone_neckB"
+    "Bone_Head"
    ]
   },
   "ValveBiped_Bip01_L_UpperArm": {
@@ -55,7 +55,7 @@
   },
   "ValveBiped_Bip01_L_Hand": {
    "bone": "Bone_L_Hand",
-   "rigid": 0.022,
+   "rigid": 0.0285,
    "from": [
     "ValveBiped_Bip01_L_Hand"
    ],
@@ -95,7 +95,7 @@
   },
   "ValveBiped_Bip01_R_Hand": {
    "bone": "Bone_R_Hand",
-   "rigid": 0.022,
+   "rigid": 0.0285,
    "from": [
     "ValveBiped_Bip01_R_Hand"
    ],
@@ -179,7 +179,7 @@
   },
   "ValveBiped_Bip01_L_Toe0": {
    "bone": "Bone_L_Toe0",
-   "rigid": 0.022,
+   "rigid": 0.0285,
    "from": [
     "ValveBiped_Bip01_L_Toe0"
    ],
@@ -189,7 +189,7 @@
   },
   "ValveBiped_Bip01_R_Toe0": {
    "bone": "Bone_R_Toe0",
-   "rigid": 0.022,
+   "rigid": 0.0285,
    "from": [
     "ValveBiped_Bip01_R_Toe0"
    ],
@@ -210,5 +210,12 @@
   "ValveBiped_Bip01_R_Clavicle": "Bone_R_Clavicle",
   "ValveBiped_Bip01_L_Trapezius": "Bone_L_Clavicle",
   "ValveBiped_Bip01_R_Trapezius": "Bone_R_Clavicle"
- }
+ },
+ "lods": [
+  14588,
+  10228,
+  9817,
+  5255,
+  2350
+ ]
 }

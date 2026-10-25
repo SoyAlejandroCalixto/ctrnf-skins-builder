@@ -1,0 +1,754 @@
+{
+ "model": "work/kazuya_ssbu/kazuya_prep.glb",
+ "rotate_z": 90,
+ "radial_scale": 1.2,
+ "weld": 1e-05,
+ "atlas": {
+  "slot": "Outfit",
+  "size": 2048
+ },
+ "segments": {
+  "Hip": {
+   "bone": "Bone_Pelvis",
+   "from": [
+    "Hip",
+    "Neck"
+   ],
+   "to": [
+    "Bone_Pelvis",
+    "Bone_Neck"
+   ]
+  },
+  "Neck": {
+   "bone": "Bone_Neck",
+   "rigid": 1.2,
+   "from": [
+    "Neck"
+   ],
+   "to": [
+    "Bone_Neck"
+   ]
+  },
+  "Head": {
+   "bone": "Bone_Head",
+   "rigid": 1.2,
+   "from": [
+    "Neck"
+   ],
+   "to": [
+    "Bone_Neck"
+   ]
+  },
+  "ShoulderL": {
+   "bone": "Bone_L_UpperArm",
+   "from": [
+    "ShoulderL",
+    "ArmL"
+   ],
+   "to": [
+    "Bone_L_UpperArm",
+    "Bone_L_Forearm"
+   ]
+  },
+  "ArmL": {
+   "bone": "Bone_L_Forearm",
+   "from": [
+    "ArmL",
+    "HandL"
+   ],
+   "to": [
+    "Bone_L_Forearm",
+    "Bone_L_Hand"
+   ]
+  },
+  "HandL": {
+   "bone": "Bone_L_Hand",
+   "rigid": 1.2,
+   "from": [
+    "HandL"
+   ],
+   "to": [
+    "Bone_L_Hand"
+   ],
+   "align_from": [
+    "HandL",
+    "FingerL22"
+   ],
+   "align": [
+    "Bone_L_Hand",
+    "Bone_L_Middle"
+   ]
+  },
+  "LegL": {
+   "bone": "Bone_L_Thigh",
+   "from": [
+    "LegL",
+    "KneeL"
+   ],
+   "to": [
+    "Bone_L_Thigh",
+    "Bone_L_Calf"
+   ]
+  },
+  "KneeL": {
+   "bone": "Bone_L_Calf",
+   "from": [
+    "KneeL",
+    "FootL"
+   ],
+   "to": [
+    "Bone_L_Calf",
+    "Bone_L_Foot"
+   ]
+  },
+  "FootL": {
+   "bone": "Bone_L_Foot",
+   "rigid": 1.2,
+   "from": [
+    "FootL"
+   ],
+   "to": [
+    "Bone_L_Foot"
+   ],
+   "align_from": [
+    "FootL",
+    "ToeL"
+   ],
+   "align": [
+    "Bone_L_Foot",
+    "Bone_L_Toe0"
+   ]
+  },
+  "ShoulderR": {
+   "bone": "Bone_R_UpperArm",
+   "from": [
+    "ShoulderR",
+    "ArmR"
+   ],
+   "to": [
+    "Bone_R_UpperArm",
+    "Bone_R_Forearm"
+   ]
+  },
+  "ArmR": {
+   "bone": "Bone_R_Forearm",
+   "from": [
+    "ArmR",
+    "HandR"
+   ],
+   "to": [
+    "Bone_R_Forearm",
+    "Bone_R_Hand"
+   ]
+  },
+  "HandR": {
+   "bone": "Bone_R_Hand",
+   "rigid": 1.2,
+   "from": [
+    "HandR"
+   ],
+   "to": [
+    "Bone_R_Hand"
+   ],
+   "align_from": [
+    "HandR",
+    "FingerR22"
+   ],
+   "align": [
+    "Bone_R_Hand",
+    "Bone_R_Middle"
+   ]
+  },
+  "LegR": {
+   "bone": "Bone_R_Thigh",
+   "from": [
+    "LegR",
+    "KneeR"
+   ],
+   "to": [
+    "Bone_R_Thigh",
+    "Bone_R_Calf"
+   ]
+  },
+  "KneeR": {
+   "bone": "Bone_R_Calf",
+   "from": [
+    "KneeR",
+    "FootR"
+   ],
+   "to": [
+    "Bone_R_Calf",
+    "Bone_R_Foot"
+   ]
+  },
+  "FootR": {
+   "bone": "Bone_R_Foot",
+   "rigid": 1.2,
+   "from": [
+    "FootR"
+   ],
+   "to": [
+    "Bone_R_Foot"
+   ],
+   "align_from": [
+    "FootR",
+    "ToeR"
+   ],
+   "align": [
+    "Bone_R_Foot",
+    "Bone_R_Toe0"
+   ]
+  },
+  "H_WristL": {
+   "bone": "Bone_L_Hand",
+   "rigid": 1.2,
+   "from": [
+    "HandL"
+   ],
+   "to": [
+    "Bone_L_Hand"
+   ],
+   "align_from": [
+    "HandL",
+    "FingerL22"
+   ],
+   "align": [
+    "Bone_L_Hand",
+    "Bone_L_Middle"
+   ]
+  },
+  "H_WristR": {
+   "bone": "Bone_R_Hand",
+   "rigid": 1.2,
+   "from": [
+    "HandR"
+   ],
+   "to": [
+    "Bone_R_Hand"
+   ],
+   "align_from": [
+    "HandR",
+    "FingerR22"
+   ],
+   "align": [
+    "Bone_R_Hand",
+    "Bone_R_Middle"
+   ]
+  },
+  "FingerL11": {
+   "bone": "Bone_L_Index",
+   "from": [
+    "FingerL11",
+    "FingerL12"
+   ],
+   "to": [
+    "Bone_L_Index",
+    "Bone_L_IndexB"
+   ]
+  },
+  "FingerL12": {
+   "bone": "Bone_L_IndexB",
+   "from": [
+    "FingerL12",
+    "FingerL13"
+   ],
+   "to": [
+    "Bone_L_IndexB",
+    "Bone_L_IndexC"
+   ]
+  },
+  "FingerL13": {
+   "bone": "Bone_L_IndexC",
+   "rigid": 1.2,
+   "from": [
+    "FingerL13"
+   ],
+   "to": [
+    "Bone_L_IndexC"
+   ],
+   "align_from": [
+    "FingerL12",
+    "FingerL13"
+   ],
+   "align": [
+    "Bone_L_IndexB",
+    "Bone_L_IndexC"
+   ]
+  },
+  "FingerL21": {
+   "bone": "Bone_L_Middle",
+   "from": [
+    "FingerL21",
+    "FingerL22"
+   ],
+   "to": [
+    "Bone_L_Middle",
+    "Bone_L_MiddleB"
+   ]
+  },
+  "FingerL22": {
+   "bone": "Bone_L_MiddleB",
+   "from": [
+    "FingerL22",
+    "FingerL23"
+   ],
+   "to": [
+    "Bone_L_MiddleB",
+    "Bone_L_MiddleC"
+   ]
+  },
+  "FingerL23": {
+   "bone": "Bone_L_MiddleC",
+   "rigid": 1.2,
+   "from": [
+    "FingerL23"
+   ],
+   "to": [
+    "Bone_L_MiddleC"
+   ],
+   "align_from": [
+    "FingerL22",
+    "FingerL23"
+   ],
+   "align": [
+    "Bone_L_MiddleB",
+    "Bone_L_MiddleC"
+   ]
+  },
+  "FingerL41": {
+   "bone": "Bone_L_Pinky",
+   "from": [
+    "FingerL41",
+    "FingerL42"
+   ],
+   "to": [
+    "Bone_L_Pinky",
+    "Bone_L_PinkyB"
+   ]
+  },
+  "FingerL42": {
+   "bone": "Bone_L_PinkyB",
+   "from": [
+    "FingerL42",
+    "FingerL43"
+   ],
+   "to": [
+    "Bone_L_PinkyB",
+    "Bone_L_PinkyC"
+   ]
+  },
+  "FingerL43": {
+   "bone": "Bone_L_PinkyC",
+   "rigid": 1.2,
+   "from": [
+    "FingerL43"
+   ],
+   "to": [
+    "Bone_L_PinkyC"
+   ],
+   "align_from": [
+    "FingerL42",
+    "FingerL43"
+   ],
+   "align": [
+    "Bone_L_PinkyB",
+    "Bone_L_PinkyC"
+   ]
+  },
+  "FingerL51": {
+   "bone": "Bone_L_Thumb",
+   "from": [
+    "FingerL51",
+    "FingerL52"
+   ],
+   "to": [
+    "Bone_L_Thumb",
+    "Bone_L_ThumbB"
+   ]
+  },
+  "FingerL52": {
+   "bone": "Bone_L_ThumbB",
+   "from": [
+    "FingerL52",
+    "FingerL53"
+   ],
+   "to": [
+    "Bone_L_ThumbB",
+    "Bone_L_ThumbC"
+   ]
+  },
+  "FingerL53": {
+   "bone": "Bone_L_ThumbC",
+   "rigid": 1.2,
+   "from": [
+    "FingerL53"
+   ],
+   "to": [
+    "Bone_L_ThumbC"
+   ],
+   "align_from": [
+    "FingerL52",
+    "FingerL53"
+   ],
+   "align": [
+    "Bone_L_ThumbB",
+    "Bone_L_ThumbC"
+   ]
+  },
+  "FingerR11": {
+   "bone": "Bone_R_Index",
+   "from": [
+    "FingerR11",
+    "FingerR12"
+   ],
+   "to": [
+    "Bone_R_Index",
+    "Bone_R_IndexB"
+   ]
+  },
+  "FingerR12": {
+   "bone": "Bone_R_IndexB",
+   "from": [
+    "FingerR12",
+    "FingerR13"
+   ],
+   "to": [
+    "Bone_R_IndexB",
+    "Bone_R_IndexC"
+   ]
+  },
+  "FingerR13": {
+   "bone": "Bone_R_IndexC",
+   "rigid": 1.2,
+   "from": [
+    "FingerR13"
+   ],
+   "to": [
+    "Bone_R_IndexC"
+   ],
+   "align_from": [
+    "FingerR12",
+    "FingerR13"
+   ],
+   "align": [
+    "Bone_R_IndexB",
+    "Bone_R_IndexC"
+   ]
+  },
+  "FingerR21": {
+   "bone": "Bone_R_Middle",
+   "from": [
+    "FingerR21",
+    "FingerR22"
+   ],
+   "to": [
+    "Bone_R_Middle",
+    "Bone_R_MiddleB"
+   ]
+  },
+  "FingerR22": {
+   "bone": "Bone_R_MiddleB",
+   "from": [
+    "FingerR22",
+    "FingerR23"
+   ],
+   "to": [
+    "Bone_R_MiddleB",
+    "Bone_R_MiddleC"
+   ]
+  },
+  "FingerR23": {
+   "bone": "Bone_R_MiddleC",
+   "rigid": 1.2,
+   "from": [
+    "FingerR23"
+   ],
+   "to": [
+    "Bone_R_MiddleC"
+   ],
+   "align_from": [
+    "FingerR22",
+    "FingerR23"
+   ],
+   "align": [
+    "Bone_R_MiddleB",
+    "Bone_R_MiddleC"
+   ]
+  },
+  "FingerR41": {
+   "bone": "Bone_R_Pinky",
+   "from": [
+    "FingerR41",
+    "FingerR42"
+   ],
+   "to": [
+    "Bone_R_Pinky",
+    "Bone_R_PinkyB"
+   ]
+  },
+  "FingerR42": {
+   "bone": "Bone_R_PinkyB",
+   "from": [
+    "FingerR42",
+    "FingerR43"
+   ],
+   "to": [
+    "Bone_R_PinkyB",
+    "Bone_R_PinkyC"
+   ]
+  },
+  "FingerR43": {
+   "bone": "Bone_R_PinkyC",
+   "rigid": 1.2,
+   "from": [
+    "FingerR43"
+   ],
+   "to": [
+    "Bone_R_PinkyC"
+   ],
+   "align_from": [
+    "FingerR42",
+    "FingerR43"
+   ],
+   "align": [
+    "Bone_R_PinkyB",
+    "Bone_R_PinkyC"
+   ]
+  },
+  "FingerR51": {
+   "bone": "Bone_R_Thumb",
+   "from": [
+    "FingerR51",
+    "FingerR52"
+   ],
+   "to": [
+    "Bone_R_Thumb",
+    "Bone_R_ThumbB"
+   ]
+  },
+  "FingerR52": {
+   "bone": "Bone_R_ThumbB",
+   "from": [
+    "FingerR52",
+    "FingerR53"
+   ],
+   "to": [
+    "Bone_R_ThumbB",
+    "Bone_R_ThumbC"
+   ]
+  },
+  "FingerR53": {
+   "bone": "Bone_R_ThumbC",
+   "rigid": 1.2,
+   "from": [
+    "FingerR53"
+   ],
+   "to": [
+    "Bone_R_ThumbC"
+   ],
+   "align_from": [
+    "FingerR52",
+    "FingerR53"
+   ],
+   "align": [
+    "Bone_R_ThumbB",
+    "Bone_R_ThumbC"
+   ]
+  },
+  "FingerL31": {
+   "bone": "Bone_L_Middle",
+   "from": [
+    "FingerL31",
+    "FingerL32"
+   ],
+   "to": [
+    "Bone_L_Middle",
+    "Bone_L_MiddleB"
+   ],
+   "offset": [
+    -0.021,
+    -0.007,
+    -0.0035
+   ]
+  },
+  "FingerL32": {
+   "bone": "Bone_L_MiddleB",
+   "from": [
+    "FingerL32",
+    "FingerL33"
+   ],
+   "to": [
+    "Bone_L_MiddleB",
+    "Bone_L_MiddleC"
+   ],
+   "offset": [
+    -0.021,
+    -0.007,
+    -0.0035
+   ]
+  },
+  "FingerL33": {
+   "bone": "Bone_L_MiddleC",
+   "rigid": 1.2,
+   "from": [
+    "FingerL33"
+   ],
+   "to": [
+    "Bone_L_MiddleC"
+   ],
+   "offset": [
+    -0.021,
+    -0.007,
+    -0.0035
+   ],
+   "align_from": [
+    "FingerL32",
+    "FingerL33"
+   ],
+   "align": [
+    "Bone_L_MiddleB",
+    "Bone_L_MiddleC"
+   ]
+  },
+  "FingerR31": {
+   "bone": "Bone_R_Middle",
+   "from": [
+    "FingerR31",
+    "FingerR32"
+   ],
+   "to": [
+    "Bone_R_Middle",
+    "Bone_R_MiddleB"
+   ],
+   "offset": [
+    -0.021,
+    0.007,
+    -0.0035
+   ]
+  },
+  "FingerR32": {
+   "bone": "Bone_R_MiddleB",
+   "from": [
+    "FingerR32",
+    "FingerR33"
+   ],
+   "to": [
+    "Bone_R_MiddleB",
+    "Bone_R_MiddleC"
+   ],
+   "offset": [
+    -0.021,
+    0.007,
+    -0.0035
+   ]
+  },
+  "FingerR33": {
+   "bone": "Bone_R_MiddleC",
+   "rigid": 1.2,
+   "from": [
+    "FingerR33"
+   ],
+   "to": [
+    "Bone_R_MiddleC"
+   ],
+   "offset": [
+    -0.021,
+    0.007,
+    -0.0035
+   ],
+   "align_from": [
+    "FingerR32",
+    "FingerR33"
+   ],
+   "align": [
+    "Bone_R_MiddleB",
+    "Bone_R_MiddleC"
+   ]
+  }
+ },
+ "bones": {
+  "Waist": "Bone_Spine2",
+  "Bust": "Bone_Spine3",
+  "ClavicleL": "Bone_L_Clavicle",
+  "ToeL": "Bone_L_Toe0",
+  "ClavicleR": "Bone_R_Clavicle",
+  "ToeR": "Bone_R_Toe0",
+  "FingerL10": "Bone_L_Hand",
+  "FingerL11": "Bone_L_Index",
+  "FingerL12": "Bone_L_IndexB",
+  "FingerL13": "Bone_L_IndexC",
+  "FingerL20": "Bone_L_Hand",
+  "FingerL21": "Bone_L_Middle",
+  "FingerL22": "Bone_L_MiddleB",
+  "FingerL23": "Bone_L_MiddleC",
+  "FingerL30": "Bone_L_Hand",
+  "FingerL31": "Bone_L_Middle",
+  "FingerL32": "Bone_L_MiddleB",
+  "FingerL33": "Bone_L_MiddleC",
+  "FingerL40": "Bone_L_Hand",
+  "FingerL41": "Bone_L_Pinky",
+  "FingerL42": "Bone_L_PinkyB",
+  "FingerL43": "Bone_L_PinkyC",
+  "FingerL51": "Bone_L_Thumb",
+  "FingerL52": "Bone_L_ThumbB",
+  "FingerL53": "Bone_L_ThumbC",
+  "FingerR10": "Bone_R_Hand",
+  "FingerR11": "Bone_R_Index",
+  "FingerR12": "Bone_R_IndexB",
+  "FingerR13": "Bone_R_IndexC",
+  "FingerR20": "Bone_R_Hand",
+  "FingerR21": "Bone_R_Middle",
+  "FingerR22": "Bone_R_MiddleB",
+  "FingerR23": "Bone_R_MiddleC",
+  "FingerR30": "Bone_R_Hand",
+  "FingerR31": "Bone_R_Middle",
+  "FingerR32": "Bone_R_MiddleB",
+  "FingerR33": "Bone_R_MiddleC",
+  "FingerR40": "Bone_R_Hand",
+  "FingerR41": "Bone_R_Pinky",
+  "FingerR42": "Bone_R_PinkyB",
+  "FingerR43": "Bone_R_PinkyC",
+  "FingerR51": "Bone_R_Thumb",
+  "FingerR52": "Bone_R_ThumbB",
+  "FingerR53": "Bone_R_ThumbC"
+ },
+ "base_colors": {
+  "alp_face": [
+   0.58,
+   0.471,
+   0.314
+  ],
+  "alp_demon_001_col": [
+   0.04,
+   0.04,
+   0.04
+  ],
+  "alp_demon_002_col": [
+   0.1,
+   0.075,
+   0.05
+  ]
+ },
+ "lods": [
+  12600,
+  7740,
+  7150,
+  3800,
+  2480
+ ],
+ "drop_objects": [
+  "5_Tooth I.Tooth I I_1.0_0_0"
+ ],
+ "lod_keep": [
+  "Bone_Head",
+  "Bone_Neck"
+ ],
+ "drop_groups": [
+  "S_BeltL3",
+  "S_BeltL4",
+  "S_BeltL5",
+  "S_BeltR3",
+  "S_BeltR4",
+  "S_BeltR5"
+ ]
+}

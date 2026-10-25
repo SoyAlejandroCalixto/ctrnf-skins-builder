@@ -1,6 +1,7 @@
 """Dry-run of what the OCTR launcher does at launch with the enabled mods: scans the mods
-folder, enables every mod found (patches.json) and prepares the overlays, without starting the
-game. Uses the portable's own Python and scripts.
+folder, enables every mod found (patches.json) and prepares the overlays for the game in the
+launcher's game_dir (launcher.ini), without starting the game. Uses the portable's own Python
+and scripts.
 
     python check_launcher.py <portable folder> [--no-enable]
 
@@ -25,8 +26,11 @@ if ENABLE:
     d['disabled'] = [k for k in d.get('disabled', []) if k not in d['enabled']]
     p.write_text(json.dumps(d, indent=2))
 port = Path('..').resolve()
-game = next(d for d in port.iterdir() if d.is_dir() and (d / 'eboot.bin').exists())
-title = 'CUSA14876' if 'CUSA14876' in game.name else 'CUSA13795'
+ini = port / 'launcher.ini'
+dirs = [l.split('=', 1)[1].strip() for l in (ini.read_text(encoding='utf-8').splitlines() if ini.exists() else [])
+        if l.startswith('game_dir=')]
+game = Path(dirs[0]) if dirs else next(d for d in port.iterdir() if d.is_dir() and (d / 'eboot.bin').exists())
+title = 'CUSA13795'
 env = dict(os.environ)
 mod_packages.prepare(port, port, env, game, port / 'bbport.ini', prepare_only=True,
                      title_id=title, app_version='01.21')

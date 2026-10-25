@@ -31,6 +31,8 @@ reference.glb comes from `character_mod.py export`. fit.json:
      "lods": [23648, 10546, ...],                # optional: the game's vertex count per level
                                                  # (character_mod.py info); bigger models get
                                                  # reduced copies out_lod<n>.glb
+     "lod_keep": ["Bone_Head", "Bone_Neck"],     # optional: game bones (prefixes) whose part the
+                                                 # reduction spares while it can (a face)
      "rotate_z": 90,                             # degrees turning the model to face +X
      "radial_scale": 0.0115,                     # thickness scale of stretched parts (a
                                                  # segment's own "radial" overrides it)
@@ -780,20 +782,28 @@ def make_atlas(mesh, size, slot, path):
                 u, v = u * s[0] + loc[0], v * s[1] + loc[1]
             mapped[li] = (u, v)
     # A repeating texture whose UVs sit in another tile (-1..0, say): move all of the material's
-    # UVs by whole tiles so their middle lands in 0..1, keeping the layout intact.
-    shift = {}
+    # UVs by whole tiles so their middle lands in 0..1, keeping the layout intact. A material
+    # spread over several tiles (two glasses lenses side by side, 0..2) moves each face by itself.
+    shift, face_shift = {}, set()
     loops_of = {i: [li for p in mesh.data.polygons if p.material_index == i for li in p.loop_indices] for i in used}
     for i in used:
         if sources[i][3] != 'REPEAT':
             continue
         coords = [mapped[li] for li in loops_of[i]]
-        mid_u = (min(c[0] for c in coords) + max(c[0] for c in coords)) / 2
-        mid_v = (min(c[1] for c in coords) + max(c[1] for c in coords)) / 2
-        shift[i] = (math.floor(mid_u), math.floor(mid_v))
+        lo_u, hi_u = min(c[0] for c in coords), max(c[0] for c in coords)
+        lo_v, hi_v = min(c[1] for c in coords), max(c[1] for c in coords)
+        shift[i] = (math.floor((lo_u + hi_u) / 2), math.floor((lo_v + hi_v) / 2))
+        if hi_u - lo_u > 1.001 or hi_v - lo_v > 1.001:
+            face_shift.add(i)
     final = {}
-    for i in used:
+    for poly in mesh.data.polygons:
+        i = poly.material_index
         du, dv = shift.get(i, (0, 0))
-        for li in loops_of[i]:
+        if i in face_shift:
+            n = len(poly.loop_indices)
+            du = math.floor(sum(mapped[li][0] for li in poly.loop_indices) / n)
+            dv = math.floor(sum(mapped[li][1] for li in poly.loop_indices) / n)
+        for li in poly.loop_indices:
             u, v = mapped[li]
             final[li] = (min(max(u - du, 0.0), 1.0), min(max(v - dv, 0.0), 1.0))
     # A plain colour gets a 32-pixel cell and every UV at its centre, where filtering and mip
@@ -1005,6 +1015,13 @@ def reduced_mesh(source, target):
                (x.link_loop_next[layer].uv - y[layer].uv).length > 1e-5:
                 seam.update(v.index for v in e.verts)
     bm.free()
+    # Parts named in "lod_keep" (game bone prefixes: a face of several meshes) are kept the same
+    # way: collapsed, their pieces shrink apart and open holes.
+    prefixes = tuple(fit.get('lod_keep', []))
+    if prefixes:
+        kept = {g.index for g in obj.vertex_groups if g.name.startswith(prefixes)}
+        seam.update(v.index for v in obj.data.vertices
+                    if sum(g.weight for g in v.groups if g.group in kept) > 0.5)
     keep = obj.vertex_groups.new(name='_seams')
     keep.add(list(seam), 1.0, 'REPLACE')
     def exported():
@@ -1057,13 +1074,20 @@ def reduced_mesh(source, target):
     # A face picks its island among the big ones: scans strew slivers of a few triangles along
     # their seams, and a face that picked one would take the sliver's colour all over.
     big = [ti for k, members in islands.items() if len(members) >= 50 for ti in members] or list(range(len(tris)))
-    # ... and only among its own mesh's (the "_part" each face carries from before the join).
+    # ... and only among its own mesh's (the "_part" each face carries from before the join). A mesh
+    # made only of small islands (hair cards) keeps all of them, or its faces would go to the
+    # nearest other mesh (the scalp under the hair) and take its colour.
     src_part = src.attributes.get('_part')
     me = obj.data
     part = me.attributes.get('_part')
-    parts = {}
+    part_of = lambda ti: src_part.data[tris[ti].polygon_index].value if src_part else 0  # noqa: E731
+    parts, small = {}, {}
     for ti in big:
-        parts.setdefault(src_part.data[tris[ti].polygon_index].value if src_part else 0, []).append(ti)
+        parts.setdefault(part_of(ti), []).append(ti)
+    for ti in range(len(tris)):
+        if part_of(ti) not in parts:
+            small.setdefault(part_of(ti), []).append(ti)
+    parts.update(small)
     wholes = {k: (BVHTree.FromPolygons(coords, [tris[i].vertices for i in members]), members)
               for k, members in parts.items()}
     everything = (BVHTree.FromPolygons(coords, [tris[i].vertices for i in big]), big)
