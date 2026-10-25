@@ -272,7 +272,7 @@ def merge(target, *sources):
         'name': target.name, 'version': '1.0.0', 'author': 'character_import',
         'description': 'Contains: ' + ', '.join(m['name'] for m in manifests) + '.',
         'requiresCapabilities': ['archive-assets'],
-        'compatibility': manifests[0]['compatibility'],
+        'compatibility': {'online': 'allowed'},
         'operations': operations,
     }
     manifest['files'] = [{'file': p.relative_to(target).as_posix(), 'sha256': sha(p.read_bytes()),

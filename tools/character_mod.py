@@ -282,8 +282,7 @@ def write_package(archives, folder, files, name, description=None):
         'name': folder.name, 'version': '1.0.0', 'author': 'character_import',
         'description': description or f'Replaces the default outfit of {name} with a custom model.',
         'requiresCapabilities': ['archive-assets'],
-        'compatibility': {'eboot_sha256': [sha((Path(archives).parent / 'eboot.bin').read_bytes())],
-                          'online': 'allowed'},
+        'compatibility': {'online': 'allowed'},
         'operations': operations,
     }
     manifest['files'] = [{'file': p.relative_to(folder).as_posix(), 'sha256': sha(p.read_bytes()),

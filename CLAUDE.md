@@ -236,13 +236,4 @@ material del cuerpo; evita los metálicos/pelo/fur). Añade la entrada con `char
   Grosor del torso: `"radial"` 2.4 con cabeza 2.2.
 - **Mods**: paquetes OCTR (`mod.json` con operaciones `archive_asset`). Nunca `update3.pak` sueltos
   (solo uno puede estar activo). Dos mods del mismo piloto chocan.
-- **Un mod sirve para el juego con el que se construyó**: guarda la huella del `eboot.bin` y de
-  cada archivo original que reemplaza. Con otro dump el launcher lo
-  bloquea (`unsupported game executable`, `Original content checksum mismatch`): constrúyelo de
-  nuevo con los `archives/` de ese juego.
-- **`Mod launch blocked: Incomplete executable patch: CrashTeamRacing.xml/<parche>`**: el parche
-  del ejecutable no encaja con ese `eboot.bin` (dumps que ya traen 60 FPS / sin motion blur
-  aplicados). Sin mods el launcher lo salta; con mods bloquea. Desactiva ese parche en la pestaña
-  *Mods* del launcher (`patch_60fps`, `patch_no_motion_blur` en `bbport.ini`): si el eboot ya lo
-  trae, no se pierde nada.
 - **No borres** cosas del usuario sin pedírselo; mueve a `<portable>/mod-state/removed/`.

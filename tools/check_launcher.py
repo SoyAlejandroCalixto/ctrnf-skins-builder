@@ -30,10 +30,8 @@ ini = port / 'launcher.ini'
 dirs = [l.split('=', 1)[1].strip() for l in (ini.read_text(encoding='utf-8').splitlines() if ini.exists() else [])
         if l.startswith('game_dir=')]
 game = Path(dirs[0]) if dirs else next(d for d in port.iterdir() if d.is_dir() and (d / 'eboot.bin').exists())
-title = 'CUSA13795'
 env = dict(os.environ)
-mod_packages.prepare(port, port, env, game, port / 'bbport.ini', prepare_only=True,
-                     title_id=title, app_version='01.21')
+mod_packages.prepare(port, port, env, game, port / 'bbport.ini', prepare_only=True)
 plan = json.loads(Path(env['BB_MOD_ARCHIVE_PLAN']).read_text())
 print('OK:', len(plan), 'archive entries replaced')
 '''
