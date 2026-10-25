@@ -21,7 +21,7 @@ memorias de Claude Code sobre este proyecto: lo que valga para todos va aquí; l
 
 1. Si no existe `config.json`, pide al usuario la **carpeta portable del juego** (la que contiene
    `Crash™ Team Racing Nitro-Fueled.exe`, `mods/`, `python/` y `scripts/`). La carpeta del juego
-   (versión USA `CUSA13795` con la 1.21, con `eboot.bin` y `archives/`) es la de `game_dir` en
+   (`CUSA13795` con la 1.21, con `eboot.bin` y `archives/`) es la de `game_dir` en
    `<portable>/launcher.ini`; puede estar fuera de la portable. Copia `config.example.json` a
    `config.json` y rellena `portable`, `archives` (= `<juego>/archives`), `mods`, `blender`.
 2. Lee `config.json` y úsalo en todos los comandos.
@@ -237,7 +237,7 @@ material del cuerpo; evita los metálicos/pelo/fur). Añade la entrada con `char
 - **Mods**: paquetes OCTR (`mod.json` con operaciones `archive_asset`). Nunca `update3.pak` sueltos
   (solo uno puede estar activo). Dos mods del mismo piloto chocan.
 - **Un mod sirve para el juego con el que se construyó**: guarda la huella del `eboot.bin` y de
-  cada archivo original que reemplaza. Con otro dump (otra edición o variante) el launcher lo
+  cada archivo original que reemplaza. Con otro dump el launcher lo
   bloquea (`unsupported game executable`, `Original content checksum mismatch`): constrúyelo de
   nuevo con los `archives/` de ese juego.
 - **`Mod launch blocked: Incomplete executable patch: CrashTeamRacing.xml/<parche>`**: el parche
