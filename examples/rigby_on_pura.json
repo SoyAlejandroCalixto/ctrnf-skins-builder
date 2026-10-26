@@ -1,5 +1,5 @@
 {
- "model": "work/rigby/src/source/Rigby.fbx",
+ "model": "work/rigby/rigby_curled.glb",
  "rotate_z": 90,
  "radial_scale": 2.0,
  "images": {
@@ -48,27 +48,53 @@
   },
   "upperarm_l": {
    "bone": "Bone_L_Thigh",
+   "posed": true,
    "from": [
     "upperarm_l",
     "lowerarm_l"
    ],
    "to": [
-    "Bone_L_Thigh",
-    "Bone_L_Calf"
+    [
+     -0.029,
+     0.165,
+     0.79
+    ],
+    {
+     "between": [
+      [
+       -0.029,
+       0.165,
+       0.79
+      ],
+      "@hand_l"
+     ],
+     "t": 0.45
+    }
    ],
-   "radial": 3.2
+   "radial": 2.25
   },
   "lowerarm_l": {
    "bone": "Bone_L_Calf",
+   "posed": true,
    "from": [
     "lowerarm_l",
     "hand_l"
    ],
    "to": [
-    "Bone_L_Calf",
-    "Bone_L_Foot"
+    {
+     "between": [
+      [
+       -0.029,
+       0.165,
+       0.79
+      ],
+      "@hand_l"
+     ],
+     "t": 0.45
+    },
+    "@hand_l"
    ],
-   "radial": 3.2
+   "radial": 2.25
   },
   "hand_l": {
    "bone": "Bone_L_Foot",
@@ -94,73 +120,151 @@
    "roll": [
     "Bone_L_04_FrontToe",
     "Bone_L_FrontToe"
+   ],
+   "offset": [
+    0.0317,
+    0.078,
+    -0.0619
    ]
   },
   "thigh_l": {
-   "bone": "Bone_L_Thigh2",
+   "bone": "Bone_Pelvis",
+   "posed": true,
    "from": [
     "thigh_l",
     "calf_l"
    ],
    "to": [
-    "Bone_L_Thigh2",
-    "Bone_L_Calf2"
+    [
+     -0.016,
+     0.105,
+     0.363
+    ],
+    [
+     0.09,
+     0.18,
+     0.43
+    ]
    ],
-   "radial": 3.2
+   "radial": 2.25
   },
   "calf_l": {
-   "bone": "Bone_L_Calf2",
+   "bone": "Bone_Pelvis",
+   "posed": true,
    "from": [
     "calf_l",
     "foot_l"
    ],
    "to": [
-    "Bone_L_Calf2",
-    "Bone_L_Foot2"
+    [
+     0.09,
+     0.18,
+     0.43
+    ],
+    [
+     0.188,
+     0.24,
+     0.275
+    ]
    ],
-   "radial": 3.2
+   "radial": 2.25
   },
   "foot_l": {
-   "bone": "Bone_L_Foot2",
-   "rigid": 2.6,
+   "bone": "Bone_Pelvis",
+   "posed": true,
+   "rigid": 2.1,
    "from": [
     "foot_l"
    ],
    "to": [
-    "Bone_L_Foot2"
+    [
+     0.188,
+     0.24,
+     0.275
+    ]
    ],
    "align_from": [
     "foot_l",
     "ball_l"
    ],
    "align": [
-    "Bone_L_Foot2",
-    "Bone_L_Toe02"
+    [
+     0.188,
+     0.24,
+     0.275
+    ],
+    [
+     0.2498,
+     0.24,
+     0.375
+    ]
+   ],
+   "roll_from": [
+    "thigh_r",
+    "thigh_l"
+   ],
+   "roll": [
+    [
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     1,
+     0
+    ]
    ]
   },
   "upperarm_r": {
    "bone": "Bone_R_Thigh",
+   "posed": true,
    "from": [
     "upperarm_r",
     "lowerarm_r"
    ],
    "to": [
-    "Bone_R_Thigh",
-    "Bone_R_Calf"
+    [
+     -0.029,
+     -0.165,
+     0.79
+    ],
+    {
+     "between": [
+      [
+       -0.029,
+       -0.165,
+       0.79
+      ],
+      "@hand_r"
+     ],
+     "t": 0.45
+    }
    ],
-   "radial": 3.2
+   "radial": 2.25
   },
   "lowerarm_r": {
    "bone": "Bone_R_Calf",
+   "posed": true,
    "from": [
     "lowerarm_r",
     "hand_r"
    ],
    "to": [
-    "Bone_R_Calf",
-    "Bone_R_Foot"
+    {
+     "between": [
+      [
+       -0.029,
+       -0.165,
+       0.79
+      ],
+      "@hand_r"
+     ],
+     "t": 0.45
+    },
+    "@hand_r"
    ],
-   "radial": 3.2
+   "radial": 2.25
   },
   "hand_r": {
    "bone": "Bone_R_Foot",
@@ -186,48 +290,100 @@
    "roll": [
     "Bone_R_04_FrontToe",
     "Bone_R_FrontToe"
+   ],
+   "offset": [
+    0.0317,
+    -0.078,
+    -0.0619
    ]
   },
   "thigh_r": {
-   "bone": "Bone_R_Thigh2",
+   "bone": "Bone_Pelvis",
+   "posed": true,
    "from": [
     "thigh_r",
     "calf_r"
    ],
    "to": [
-    "Bone_R_Thigh2",
-    "Bone_R_Calf2"
+    [
+     -0.016,
+     -0.105,
+     0.363
+    ],
+    [
+     0.09,
+     -0.18,
+     0.43
+    ]
    ],
-   "radial": 3.2
+   "radial": 2.25
   },
   "calf_r": {
-   "bone": "Bone_R_Calf2",
+   "bone": "Bone_Pelvis",
+   "posed": true,
    "from": [
     "calf_r",
     "foot_r"
    ],
    "to": [
-    "Bone_R_Calf2",
-    "Bone_R_Foot2"
+    [
+     0.09,
+     -0.18,
+     0.43
+    ],
+    [
+     0.188,
+     -0.24,
+     0.275
+    ]
    ],
-   "radial": 3.2
+   "radial": 2.25
   },
   "foot_r": {
-   "bone": "Bone_R_Foot2",
-   "rigid": 2.6,
+   "bone": "Bone_Pelvis",
+   "posed": true,
+   "rigid": 2.1,
    "from": [
     "foot_r"
    ],
    "to": [
-    "Bone_R_Foot2"
+    [
+     0.188,
+     -0.24,
+     0.275
+    ]
    ],
    "align_from": [
     "foot_r",
     "ball_r"
    ],
    "align": [
-    "Bone_R_Foot2",
-    "Bone_R_Toe02"
+    [
+     0.188,
+     -0.24,
+     0.275
+    ],
+    [
+     0.2498,
+     -0.24,
+     0.375
+    ]
+   ],
+   "roll_from": [
+    "thigh_l",
+    "thigh_r"
+   ],
+   "roll": [
+    [
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     -1,
+     0
+    ]
    ]
   },
   "tail_01": {
@@ -306,9 +462,7 @@
   "neck_01": "Bone_Neck",
   "neck_02": "Bone_Neck",
   "clavicle_l": "Bone_Spine2",
-  "ball_l": "Bone_L_Toe02",
   "clavicle_r": "Bone_Spine2",
-  "ball_r": "Bone_R_Toe02",
   "index_01_l": "Bone_L_Toe0",
   "index_02_l": "Bone_L_Toe0",
   "index_03_l": "Bone_L_Toe0",
@@ -326,7 +480,9 @@
   "middle_03_r": "Bone_R_Toe0",
   "pinky_01_r": "Bone_R_Toe0",
   "pinky_02_r": "Bone_R_Toe0",
-  "pinky_03_r": "Bone_R_Toe0"
+  "pinky_03_r": "Bone_R_Toe0",
+  "thigh_l": "Bone_Pelvis",
+  "thigh_r": "Bone_Pelvis"
  },
  "atlas": {
   "size": 1024,
@@ -336,6 +492,11 @@
   10000,
   8200,
   8000,
-  4100
- ]
+  3950
+ ],
+ "pose": {
+  "character": "pura",
+  "animation": "race_driver_idle",
+  "frame": 0
+ }
 }

@@ -34,9 +34,10 @@ memorias de Claude Code sobre este proyecto: lo que valga para todos va aquí; l
 | `tools/blender_fit.py` | Script de Blender: ajusta el modelo al esqueleto del piloto, atlas de texturas, LODs reducidos, renders. Docstring = referencia de `fit.json`. |
 | `tools/model.py` `igz.py` `texture.py` `gltf.py` `importer.py` `pak.py` | Formatos del juego (IGZ v10 PS4, BC1/BC3/BC5 con tiling PS4, PAK IGA v13). |
 | `tools/lib/` | Copia de scripts del launcher OCTR que usan las herramientas (lector PAK, validador `mod.json`). |
-| `tools/ui_mod.py` | `names` (mod "Nombres de pilotos"), `portrait` (se añade a un mod ya hecho), `merge`, `repack`. Tabla `UI`. |
+| `tools/hka.py` | Animaciones Havok de los pilotos (`anims/Drivers/<X>.hka`): esqueleto, animaciones, pose de un fotograma. |
+| `tools/ui_mod.py` | `names` (mod "Nombres de pilotos"), `portrait` (se añade a un mod ya hecho), `merge`, `split`, `repack`. Tabla `UI`. |
 | `tools/check_launcher.py` | Simula la preparación de mods del launcher (sin abrir el juego). |
-| `tools/blender/` | Inspección/revisión en Blender: `inspect.py`, `mats.py`, `seated.py`, `closeup2.py`, `xps_import.py`. |
+| `tools/blender/` | Inspección/revisión en Blender: `inspect.py`, `mats.py`, `seated.py`, `closeup2.py`, `xps_import.py`, `overlay.py` (modelo sobre el piloto en rayos X), `posed.py` (en la animación real del piloto, sobre el kart); `curl.py` cierra los dedos del modelo en su pose de reposo. |
 | `tools/unzip.py` | Extrae zips de forma segura (rechaza rutas `..`). |
 | `examples/*.json` | `fit.json` de referencia por tipo de modelo. Su `"model"` apunta a rutas viejas: cámbialo (las rutas relativas se leen desde la carpeta del `fit.json`). |
 | `work/` | Trabajo por modelo: `work/<nombre>/src`, `fit.json`, salidas `.glb`/`.png`, renders; fuentes de mods en `work/mods/`. |
@@ -132,7 +133,15 @@ material del cuerpo; evita los metálicos/pelo/fur). Añade la entrada con `char
 10. **Unir en un solo pack**: todos los mods van juntos en un pack (por defecto "Crossover Skin Pack"):
     `python -I tools/ui_mod.py merge "$M/Crossover Skin Pack" work/mods/<cada mod> ... "work/mods/Nombres de pilotos"`.
     No dejes mods sueltos en `mods/`. Si `mods/` ya tiene mods sueltos de este repo, pregunta antes de
-    moverlos a `<portable>/mod-state/removed/`.
+    moverlos a `<portable>/mod-state/removed/`. Si el usuario pide un mod por personaje, sepáralo:
+    `python -I tools/ui_mod.py split "$A" "$M/<Pack>" crash=work/mods/split/Mario ... names="work/mods/split/Nombres de pilotos"`
+    (todos los pilotos del pack; los nombres siempre en un mod aparte), mueve el pack a
+    `mod-state/removed/` y copia las carpetas a `mods/`. Si cada mod se va a distribuir solo y el
+    usuario quiere el nombre dentro de cada uno: `names "$A" work/mods/names_tmp/<dir> <piloto>=<Nombre>`
+    por personaje y `merge work/mods/single/<dir> work/mods/split/<dir> work/mods/names_tmp/<dir>`.
+    Avísale antes: todos cambian `systemData_<idioma>.lng`, así que el launcher no deja activar dos
+    de esos mods a la vez ("Mod conflicts"); `check_launcher` con todos en `mods/` falla por eso. Para rehacer un personaje de un pack sin sus
+    fuentes de mod, `build` y luego `merge` con sus operaciones `!ui!` (retratos) del mod separado.
 11. **Comprobar**: `python -I tools/check_launcher.py "<portable>"` → debe listar los mods y decir
     `OK`. Si dice "A mod session is already running", el juego está abierto (normal).
 12. El usuario prueba en el juego (activar en *Mods* del launcher, reiniciar el juego) y manda capturas.
@@ -210,7 +219,11 @@ material del cuerpo; evita los metálicos/pelo/fur). Añade la entrada con `char
   **segmento por falange** (`[x1,x2]`→`[Dedo,DedoB]`, `[x2,x3]`→`[DedoB,DedoC]`, punta rígida en
   `DedoC`), no solo en `"bones"`: con los nudillos en otro sitio, al cerrarse se estiran como garras.
   El anular (los pilotos no tienen) con los segmentos del corazón y `"offset"` de medio dedo hacia
-  el meñique (`(Pinky − Middle) / 2` en el reposo del piloto).
+  el meñique (`(Pinky − Middle) / 2` en el reposo del piloto). Mano mucho más larga que la del
+  piloto (guantes de dibujo animado): ancla la palma rígida en los nudillos (`"from":
+  ["<Mano>Middle1"]`, `"to": ["Bone_X_Middle"]`, con `"align"` y `"roll"`), no en la muñeca, o los
+  dedos empiezan dentro de la palma (ver `sonic_on_cortex.json`). Sin esto las palmas quedan
+  abiertas sobre el volante.
 - **Pose al volante**: cada piloto tiene su animación y no se cambia. Ami/Megumi llevan los codos
   pegados al cuerpo (brazos en L); Isabella estira los brazos hacia el volante. Con modelos muy
   musculosos la L se nota más: avísalo al elegir piloto.
@@ -229,11 +242,29 @@ material del cuerpo; evita los metálicos/pelo/fur). Añade la entrada con `char
   rígida con solo `rotate_z` sale mirando al cielo. Alinea cabeza y cola (`"align"`) con la
   columna/cola de Pura, ancla la cabeza en `Bone_Neck` y adelanta el torso con `"offset": [0,0,-0.12]`
   (abajo en reposo = delante en el kart). Para previsualizar sentado: gira el reposo −80° en Y.
-  Manos al volante: antebrazo hasta `Bone_[LR]_Foot` (más allá hace zigzag: Pura dobla la muñeca),
-  mano anclada en `Foot` y grande (3.6) con `"align"` a `Foot→Toe0` y `"roll_from": [index_01,
-  pinky_01]` → `"roll": [Bone_X_04_FrontToe, Bone_X_FrontToe]` (sin roll la palma queda de canto);
-  dedos (`index/middle/pinky_0[123]`) en `"bones"` a `Bone_X_Toe0` para que se cierren al volante.
-  Grosor del torso: `"radial"` 2.4 con cabeza 2.2.
+  Manos al volante: mano anclada en `Foot` y grande (3.6) con `"align"` a `Foot→Toe0` y
+  `"roll_from": [index_01, pinky_01]` → `"roll": [Bone_X_04_FrontToe, Bone_X_FrontToe]` (sin roll
+  la palma queda de canto); dedos (`index/middle/pinky_0[123]`) en `"bones"` a `Bone_X_Toe0`. Pura
+  no cierra los dedos (no tiene): ciérralos antes de ajustar con
+  `"$B" -b --factory-startup --python tools/blender/curl.py -- <modelo> work/<n>/<n>_curled.glb 30 index_01_{s} middle_01_{s} pinky_01_{s} --thumb=thumb_01_{s}:40`
+  (el pulgar rodea el aro por dentro) y usa ese glb como `"model"`. Adelanta la mano ~10 cm por la
+  línea del antebrazo (`"offset"` `[0.032, ±0.078, -0.062]`, `+` izquierda).
+  Brazos y piernas: Pura dobla la muñeca y deja las patas traseras en el borde del asiento, así
+  que con segmentos normales el brazo hace zigzag y las piernas salen de fuera del cuerpo. Colócalos
+  en la pose real del kart con `"pose": {"character": "pura"}` y segmentos `"posed": true` (ver
+  docstring de `blender_fit`, y `rigby_on_pura.json`): brazo del hombro `(-0.029, ±0.165, 0.79)` a
+  la mano (`"@hand_l"`, codo a 0.45 del camino) en `Bone_X_Thigh`/`Bone_X_Calf`; pierna de la
+  cadera del modelo (`(-0.016, ±0.105, 0.363)`, bajo la barriga) a la rodilla `(0.09, ±0.18, 0.43)` y
+  al talón `(0.188, ±0.24, 0.275)`, todo en `Bone_Pelvis` (`"bones"` de `thigh_X` a `Bone_Pelvis`),
+  pie rígido 2.1 casi vertical (`(+0.0618, 0, +0.1)`; echado atrás se ve doblado). En la selección de
+  personaje el pedal queda ~10,5 cm más cerca y 6 cm más alto del piloto que en `KartCrash_Lod1` exportado: con el
+  talón en la base del pedal del glb, el pie atraviesa la placa en el juego. Con `"posed"` el grosor `"radial"`
+  va ×0.7 (2.25): la raíz de la animación de Pura escala 0.7. Míralo siempre en el kart:
+  `"$B" -b --factory-startup --python tools/blender/posed.py -- "$A" pura race_driver_idle 0 <out.png> quarter "<glb>=<atlas.png>" --kart=<kart.glb>`
+  (kart: `actors/Karts/KartCrash/KartCrash_Lod1.igz` de `kartcrash.pak` exportado con `gltf.export(Model(blob))`).
+  Grosor del torso: `"radial"` 2.4 con cabeza 2.2. Para comparar con Pura en pose de kart:
+  `tools/blender/overlay.py -- work/pura.glb <out.glb> <out.png> side|front "1.6" "(-0.45,0,-0.05)" -80`
+  (piloto en rojo, modelo en azul, en rayos X; ortho 0.45 en `(0.17,0.55,0.3)` y giro 0 para la mano).
 - **Mods**: paquetes OCTR (`mod.json` con operaciones `archive_asset`). Nunca `update3.pak` sueltos
   (solo uno puede estar activo). Dos mods del mismo piloto chocan.
 - **No borres** cosas del usuario sin pedírselo; mueve a `<portable>/mod-state/removed/`.

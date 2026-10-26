@@ -60,6 +60,22 @@ takes the game's length, across it radial_scale. A rigid part keeps its shape (s
 anchor joint put on the game's, turned by rotate_z (or to follow "align": [game joint a, b], the
 model's direction being "align_from": [model joint a, b]; with "roll_from" / "roll", also
 turned about that direction so a second model direction, e.g. index to pinky, follows the game's).
+A rigid part's "turn": [x, y, z, degrees] then turns it about that game-space axis through its
+anchor: a foot that the driver's animation leaves pointing above the pedals, say. The animation
+turns the bone, so the turn carries over (about the side axis, Y, it stays a turn up or down).
+A stretched part's "extend": factor makes it that many times the game segment's length (a shin
+that has to reach pedals the driver's own legs do not).
+
+"pose": {"character": "pura", "animation": "race_driver_idle", "frame": 0, "rider": [x, y, z]}
+lets a segment marked "posed": true be placed in the kart instead: its "to" / "align" / "roll"
+points are kart-space coordinates [x, y, z] (KartCrash: pedals Bone_[LR]_02_Pedal at
+(0.375, ±0.24, 0.215), the plate up to (0.38, ±0.24, 0.281); wheel Bone_StearingWheel
+(0.429, 0, 0.39) to (0.273, 0, 0.545)) or game bones' heads where that frame of the driver's
+animation (tools/hka.py) puts them, "rider" the kart's Bone_Rider (default KartCrash's), and its
+"offset" is in the kart. The part is then taken back to the bind pose through the inverse of
+its bone's pose, so it lands there in the game: its vertices must all weigh on that bone (its
+model bones, and their children, in "bones" to it). Legs that the driver's own legs cannot
+carry to the pedals go on Bone_Pelvis this way. Check with tools/blender/posed.py --kart.
 
 A model bone not in "segments" uses the segment of its nearest listed ancestor. Each vertex is
 placed by the weighted blend of its bones' placements (rigid models: one bone, one placement) and
@@ -372,27 +388,72 @@ turn = Matrix.Rotation(math.radians(fit.get('rotate_z', 0)), 4, 'Z')
 radial = fit['radial_scale']
 segments = fit['segments']
 
+# "pose": the driver's real kart pose, for "posed" segments (see the docstring).
+if fit.get('pose'):
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    import hka
+    pose_fit = fit['pose']
+    archives = pose_fit.get('archives') or json.loads(
+        (Path(__file__).resolve().parents[1] / 'config.json').read_text())['archives']
+    skeleton, anims = hka.driver(archives, pose_fit['character'])
+    anim, tracks = anims[pose_fit.get('animation', 'race_driver_idle')]
+    posed_skin = {b: Matrix(m) for b, m in
+                  hka.skinning(skeleton, hka.pose(skeleton, anim, tracks, pose_fit.get('frame', 0))).items()}
+    rider = Vector(pose_fit.get('rider', (-0.121, 0, 0.325)))
+
+
+def joint(seg, x):
+    """A game joint in the bind pose; in a "posed" segment a point in the kart ([x, y, z]), a
+    game bone's head where the pose puts it, "@<model joint>": where a segment that is not
+    posed puts that model joint, posed (an arm reaching a hand placed the usual way), or
+    {"between": [point, point], "t": t}: the point t of the way from one to the other."""
+    if not seg.get('posed'):
+        return game_joint[x]
+    if isinstance(x, list):
+        return Vector(x)
+    if isinstance(x, dict):
+        a, b = (joint(seg, p) for p in x['between'])
+        return a.lerp(b, x['t'])
+    if x.startswith('@'):
+        g = x[1:]
+        while g not in segments:
+            g = model_parent[g]
+        return posed_skin[segments[g]['bone']] @ (placements[g] @ model_joint[x[1:]]) + rider
+    return posed_skin[x] @ game_joint[x] + rider
+
 
 def placement(seg):
     """4x4 matrix taking a model-space point of this part to the game's bind space."""
+    m = place(seg)
+    if seg.get('posed'):
+        # Placed in the kart: back to the bind pose through its bone's pose.
+        m = posed_skin[seg['bone']].inverted() @ Matrix.Translation(-rider) @ \
+            Matrix.Translation(seg.get('offset', (0, 0, 0))) @ m
+    return m
+
+
+def place(seg):
     a = model_joint[seg['from'][0]]
     if 'rigid' in seg:
         rot = turn
         if 'align' in seg:
             src = (turn @ (model_joint[seg['align_from'][1]] - model_joint[seg['align_from'][0]])).normalized()
-            dst = (game_joint[seg['align'][1]] - game_joint[seg['align'][0]]).normalized()
+            dst = (joint(seg, seg['align'][1]) - joint(seg, seg['align'][0])).normalized()
             rot = src.rotation_difference(dst).to_matrix().to_4x4() @ turn
             if 'roll' in seg:
                 # Then turn about that direction so a second model direction (across the palm)
                 # follows the game's.
                 v = rot.to_3x3() @ (model_joint[seg['roll_from'][1]] - model_joint[seg['roll_from'][0]])
-                g = game_joint[seg['roll'][1]] - game_joint[seg['roll'][0]]
+                g = joint(seg, seg['roll'][1]) - joint(seg, seg['roll'][0])
                 v, g = v - dst * v.dot(dst), g - dst * g.dot(dst)
                 rot = v.rotation_difference(g).to_matrix().to_4x4() @ rot
-        return Matrix.Translation(game_joint[seg['to'][0]]) @ rot @ Matrix.Scale(seg['rigid'], 4) @ Matrix.Translation(-a)
+        if 'turn' in seg:
+            *axis, degrees = seg['turn']
+            rot = Matrix.Rotation(math.radians(degrees), 4, Vector(axis)) @ rot
+        return Matrix.Translation(joint(seg, seg['to'][0])) @ rot @ Matrix.Scale(seg['rigid'], 4) @ Matrix.Translation(-a)
     b = model_joint[seg['from'][1]]
     src = turn @ (b - a)
-    dst = game_joint[seg['to'][1]] - game_joint[seg['to'][0]]
+    dst = (joint(seg, seg['to'][1]) - joint(seg, seg['to'][0])) * seg.get('extend', 1)
     align = src.normalized().rotation_difference(dst.normalized()).to_matrix().to_4x4() @ turn
     # In the aligned frame: radial scale across, the game's length along the segment.
     axis = dst.normalized()
@@ -402,10 +463,13 @@ def placement(seg):
         for j in range(3):
             stretch[i][j] = seg.get('radial', radial) * ((1 if i == j else 0) - axis[i] * axis[j]) \
                 + along * axis[i] * axis[j]
-    return Matrix.Translation(game_joint[seg['to'][0]]) @ stretch @ align @ Matrix.Translation(-a)
+    return Matrix.Translation(joint(seg, seg['to'][0])) @ stretch @ align @ Matrix.Translation(-a)
 
 
-placements = {g: Matrix.Translation(s.get('offset', (0, 0, 0))) @ placement(s) for g, s in segments.items()}
+placements = {g: Matrix.Translation(s.get('offset', (0, 0, 0))) @ placement(s)
+              for g, s in segments.items() if not s.get('posed')}
+# Posed segments last: their points may name where the others put a model joint.
+placements.update({g: placement(s) for g, s in segments.items() if s.get('posed')})
 
 
 def nearest_segment(point):

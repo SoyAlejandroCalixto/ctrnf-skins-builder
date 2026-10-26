@@ -56,10 +56,10 @@
    "bone": "Bone_L_Hand",
    "rigid": 0.09,
    "from": [
-    "LeftHand"
+    "LeftHandMiddle1"
    ],
    "to": [
-    "Bone_L_Hand"
+    "Bone_L_Middle"
    ],
    "align_from": [
     "LeftHand",
@@ -68,6 +68,14 @@
    "align": [
     "Bone_L_Hand",
     "Bone_L_Middle"
+   ],
+   "roll_from": [
+    "LeftHandIndex1",
+    "LeftHandPinky1"
+   ],
+   "roll": [
+    "Bone_L_Index",
+    "Bone_L_Pinky"
    ]
   },
   "LeftUpLeg": {
@@ -128,10 +136,10 @@
    "bone": "Bone_R_Hand",
    "rigid": 0.09,
    "from": [
-    "RightHand"
+    "RightHandMiddle1"
    ],
    "to": [
-    "Bone_R_Hand"
+    "Bone_R_Middle"
    ],
    "align_from": [
     "RightHand",
@@ -140,6 +148,14 @@
    "align": [
     "Bone_R_Hand",
     "Bone_R_Middle"
+   ],
+   "roll_from": [
+    "RightHandIndex1",
+    "RightHandPinky1"
+   ],
+   "roll": [
+    "Bone_R_Index",
+    "Bone_R_Pinky"
    ]
   },
   "RightUpLeg": {
@@ -173,6 +189,456 @@
    "to": [
     "Bone_R_Foot"
    ]
+  },
+  "LeftHandIndex1": {
+   "bone": "Bone_L_Index",
+   "from": [
+    "LeftHandIndex1",
+    "LeftHandIndex2"
+   ],
+   "to": [
+    "Bone_L_Index",
+    "Bone_L_IndexB"
+   ],
+   "radial": 0.09
+  },
+  "LeftHandIndex2": {
+   "bone": "Bone_L_IndexB",
+   "from": [
+    "LeftHandIndex2",
+    "LeftHandIndex3"
+   ],
+   "to": [
+    "Bone_L_IndexB",
+    "Bone_L_IndexC"
+   ],
+   "radial": 0.09
+  },
+  "LeftHandIndex3": {
+   "bone": "Bone_L_IndexC",
+   "rigid": 0.09,
+   "from": [
+    "LeftHandIndex3"
+   ],
+   "to": [
+    "Bone_L_IndexC"
+   ],
+   "align_from": [
+    "LeftHandIndex2",
+    "LeftHandIndex3"
+   ],
+   "align": [
+    "Bone_L_IndexB",
+    "Bone_L_IndexC"
+   ]
+  },
+  "LeftHandMiddle1": {
+   "bone": "Bone_L_Middle",
+   "from": [
+    "LeftHandMiddle1",
+    "LeftHandMiddle2"
+   ],
+   "to": [
+    "Bone_L_Middle",
+    "Bone_L_MiddleB"
+   ],
+   "radial": 0.09
+  },
+  "LeftHandMiddle2": {
+   "bone": "Bone_L_MiddleB",
+   "from": [
+    "LeftHandMiddle2",
+    "LeftHandMiddle3"
+   ],
+   "to": [
+    "Bone_L_MiddleB",
+    "Bone_L_MiddleC"
+   ],
+   "radial": 0.09
+  },
+  "LeftHandMiddle3": {
+   "bone": "Bone_L_MiddleC",
+   "rigid": 0.09,
+   "from": [
+    "LeftHandMiddle3"
+   ],
+   "to": [
+    "Bone_L_MiddleC"
+   ],
+   "align_from": [
+    "LeftHandMiddle2",
+    "LeftHandMiddle3"
+   ],
+   "align": [
+    "Bone_L_MiddleB",
+    "Bone_L_MiddleC"
+   ]
+  },
+  "LeftHandRing1": {
+   "bone": "Bone_L_Middle",
+   "from": [
+    "LeftHandRing1",
+    "LeftHandRing2"
+   ],
+   "to": [
+    "Bone_L_Middle",
+    "Bone_L_MiddleB"
+   ],
+   "radial": 0.09,
+   "offset": [
+    -0.023,
+    -0.007,
+    0.0
+   ]
+  },
+  "LeftHandRing2": {
+   "bone": "Bone_L_MiddleB",
+   "from": [
+    "LeftHandRing2",
+    "LeftHandRing3"
+   ],
+   "to": [
+    "Bone_L_MiddleB",
+    "Bone_L_MiddleC"
+   ],
+   "radial": 0.09,
+   "offset": [
+    -0.023,
+    -0.007,
+    0.0
+   ]
+  },
+  "LeftHandRing3": {
+   "bone": "Bone_L_MiddleC",
+   "rigid": 0.09,
+   "from": [
+    "LeftHandRing3"
+   ],
+   "to": [
+    "Bone_L_MiddleC"
+   ],
+   "align_from": [
+    "LeftHandRing2",
+    "LeftHandRing3"
+   ],
+   "align": [
+    "Bone_L_MiddleB",
+    "Bone_L_MiddleC"
+   ],
+   "offset": [
+    -0.023,
+    -0.007,
+    0.0
+   ]
+  },
+  "LeftHandPinky1": {
+   "bone": "Bone_L_Pinky",
+   "from": [
+    "LeftHandPinky1",
+    "LeftHandPinky2"
+   ],
+   "to": [
+    "Bone_L_Pinky",
+    "Bone_L_PinkyB"
+   ],
+   "radial": 0.09
+  },
+  "LeftHandPinky2": {
+   "bone": "Bone_L_PinkyB",
+   "from": [
+    "LeftHandPinky2",
+    "LeftHandPinky3"
+   ],
+   "to": [
+    "Bone_L_PinkyB",
+    "Bone_L_PinkyC"
+   ],
+   "radial": 0.09
+  },
+  "LeftHandPinky3": {
+   "bone": "Bone_L_PinkyC",
+   "rigid": 0.09,
+   "from": [
+    "LeftHandPinky3"
+   ],
+   "to": [
+    "Bone_L_PinkyC"
+   ],
+   "align_from": [
+    "LeftHandPinky2",
+    "LeftHandPinky3"
+   ],
+   "align": [
+    "Bone_L_PinkyB",
+    "Bone_L_PinkyC"
+   ]
+  },
+  "LeftHandThumb1": {
+   "bone": "Bone_L_Thumb",
+   "from": [
+    "LeftHandThumb1",
+    "LeftHandThumb2"
+   ],
+   "to": [
+    "Bone_L_Thumb",
+    "Bone_L_ThumbB"
+   ],
+   "radial": 0.09
+  },
+  "LeftHandThumb2": {
+   "bone": "Bone_L_ThumbB",
+   "from": [
+    "LeftHandThumb2",
+    "LeftHandThumb3"
+   ],
+   "to": [
+    "Bone_L_ThumbB",
+    "Bone_L_ThumbC"
+   ],
+   "radial": 0.09
+  },
+  "LeftHandThumb3": {
+   "bone": "Bone_L_ThumbC",
+   "rigid": 0.09,
+   "from": [
+    "LeftHandThumb3"
+   ],
+   "to": [
+    "Bone_L_ThumbC"
+   ],
+   "align_from": [
+    "LeftHandThumb2",
+    "LeftHandThumb3"
+   ],
+   "align": [
+    "Bone_L_ThumbB",
+    "Bone_L_ThumbC"
+   ]
+  },
+  "RightHandIndex1": {
+   "bone": "Bone_R_Index",
+   "from": [
+    "RightHandIndex1",
+    "RightHandIndex2"
+   ],
+   "to": [
+    "Bone_R_Index",
+    "Bone_R_IndexB"
+   ],
+   "radial": 0.09
+  },
+  "RightHandIndex2": {
+   "bone": "Bone_R_IndexB",
+   "from": [
+    "RightHandIndex2",
+    "RightHandIndex3"
+   ],
+   "to": [
+    "Bone_R_IndexB",
+    "Bone_R_IndexC"
+   ],
+   "radial": 0.09
+  },
+  "RightHandIndex3": {
+   "bone": "Bone_R_IndexC",
+   "rigid": 0.09,
+   "from": [
+    "RightHandIndex3"
+   ],
+   "to": [
+    "Bone_R_IndexC"
+   ],
+   "align_from": [
+    "RightHandIndex2",
+    "RightHandIndex3"
+   ],
+   "align": [
+    "Bone_R_IndexB",
+    "Bone_R_IndexC"
+   ]
+  },
+  "RightHandMiddle1": {
+   "bone": "Bone_R_Middle",
+   "from": [
+    "RightHandMiddle1",
+    "RightHandMiddle2"
+   ],
+   "to": [
+    "Bone_R_Middle",
+    "Bone_R_MiddleB"
+   ],
+   "radial": 0.09
+  },
+  "RightHandMiddle2": {
+   "bone": "Bone_R_MiddleB",
+   "from": [
+    "RightHandMiddle2",
+    "RightHandMiddle3"
+   ],
+   "to": [
+    "Bone_R_MiddleB",
+    "Bone_R_MiddleC"
+   ],
+   "radial": 0.09
+  },
+  "RightHandMiddle3": {
+   "bone": "Bone_R_MiddleC",
+   "rigid": 0.09,
+   "from": [
+    "RightHandMiddle3"
+   ],
+   "to": [
+    "Bone_R_MiddleC"
+   ],
+   "align_from": [
+    "RightHandMiddle2",
+    "RightHandMiddle3"
+   ],
+   "align": [
+    "Bone_R_MiddleB",
+    "Bone_R_MiddleC"
+   ]
+  },
+  "RightHandRing1": {
+   "bone": "Bone_R_Middle",
+   "from": [
+    "RightHandRing1",
+    "RightHandRing2"
+   ],
+   "to": [
+    "Bone_R_Middle",
+    "Bone_R_MiddleB"
+   ],
+   "radial": 0.09,
+   "offset": [
+    -0.023,
+    0.007,
+    0.0
+   ]
+  },
+  "RightHandRing2": {
+   "bone": "Bone_R_MiddleB",
+   "from": [
+    "RightHandRing2",
+    "RightHandRing3"
+   ],
+   "to": [
+    "Bone_R_MiddleB",
+    "Bone_R_MiddleC"
+   ],
+   "radial": 0.09,
+   "offset": [
+    -0.023,
+    0.007,
+    0.0
+   ]
+  },
+  "RightHandRing3": {
+   "bone": "Bone_R_MiddleC",
+   "rigid": 0.09,
+   "from": [
+    "RightHandRing3"
+   ],
+   "to": [
+    "Bone_R_MiddleC"
+   ],
+   "align_from": [
+    "RightHandRing2",
+    "RightHandRing3"
+   ],
+   "align": [
+    "Bone_R_MiddleB",
+    "Bone_R_MiddleC"
+   ],
+   "offset": [
+    -0.023,
+    0.007,
+    0.0
+   ]
+  },
+  "RightHandPinky1": {
+   "bone": "Bone_R_Pinky",
+   "from": [
+    "RightHandPinky1",
+    "RightHandPinky2"
+   ],
+   "to": [
+    "Bone_R_Pinky",
+    "Bone_R_PinkyB"
+   ],
+   "radial": 0.09
+  },
+  "RightHandPinky2": {
+   "bone": "Bone_R_PinkyB",
+   "from": [
+    "RightHandPinky2",
+    "RightHandPinky3"
+   ],
+   "to": [
+    "Bone_R_PinkyB",
+    "Bone_R_PinkyC"
+   ],
+   "radial": 0.09
+  },
+  "RightHandPinky3": {
+   "bone": "Bone_R_PinkyC",
+   "rigid": 0.09,
+   "from": [
+    "RightHandPinky3"
+   ],
+   "to": [
+    "Bone_R_PinkyC"
+   ],
+   "align_from": [
+    "RightHandPinky2",
+    "RightHandPinky3"
+   ],
+   "align": [
+    "Bone_R_PinkyB",
+    "Bone_R_PinkyC"
+   ]
+  },
+  "RightHandThumb1": {
+   "bone": "Bone_R_Thumb",
+   "from": [
+    "RightHandThumb1",
+    "RightHandThumb2"
+   ],
+   "to": [
+    "Bone_R_Thumb",
+    "Bone_R_ThumbB"
+   ],
+   "radial": 0.09
+  },
+  "RightHandThumb2": {
+   "bone": "Bone_R_ThumbB",
+   "from": [
+    "RightHandThumb2",
+    "RightHandThumb3"
+   ],
+   "to": [
+    "Bone_R_ThumbB",
+    "Bone_R_ThumbC"
+   ],
+   "radial": 0.09
+  },
+  "RightHandThumb3": {
+   "bone": "Bone_R_ThumbC",
+   "rigid": 0.09,
+   "from": [
+    "RightHandThumb3"
+   ],
+   "to": [
+    "Bone_R_ThumbC"
+   ],
+   "align_from": [
+    "RightHandThumb2",
+    "RightHandThumb3"
+   ],
+   "align": [
+    "Bone_R_ThumbB",
+    "Bone_R_ThumbC"
+   ]
   }
  },
  "bones": {
@@ -193,8 +659,8 @@
   20000,
   15000,
   14500,
-  5200,
-  3050
+  4800,
+  2850
  ],
  "base_colors": {
   "M_Sonic_Eye_L_Inst": [

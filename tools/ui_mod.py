@@ -15,6 +15,10 @@
     python ui_mod.py merge <mods folder>/<Pack name> <mod folder> <mod folder> ...
         One mod with every operation of the given mods (which must not change the same entry).
 
+    python ui_mod.py split <game archives> <pack folder> <character>=<mod folder> ... names=<mod folder>
+        The other way round: one mod per character of a pack (model, textures, portrait), and one
+        with the driver names. Every character in the pack needs a folder.
+
     python ui_mod.py repack <game archives> <mod folder> ...
         Rebuilds the nested archives of mods built before pak.rebuild kept compression (the
         launcher refuses an archive's overlay of 64 MB or more).
@@ -239,12 +243,40 @@ def repack(archives, *folders):
             add_operations(archives, folder, entries)
 
 
-def merge(target, *sources):
-    """One mod with the operations of several (they must not change the same entry)."""
+def write_mod(target, operations, description):
+    """A mod folder named target with the given (source folder, operation) pairs."""
     import shutil
     import mod_format
     target = Path(target)
     sha = lambda b: hashlib.sha256(b).hexdigest()  # noqa: E731
+    if target.exists():
+        shutil.rmtree(target)
+    (target / 'assets').mkdir(parents=True)
+    for source, op in operations:
+        if 'payload' in op:
+            dest = target / op['payload']
+            if dest.exists():
+                raise ValueError(f'two payloads named {op["payload"]}')
+            shutil.copyfile(Path(source) / op['payload'], dest)
+    (target / mod_format.MARKER).write_bytes(mod_format.MARKER_CONTENT)
+    manifest = {
+        'schemaVersion': 2,
+        'id': ''.join(c if c.isalnum() else '-' for c in target.name.lower()).strip('-')[:80],
+        'name': target.name, 'version': '1.0.0', 'author': 'character_import',
+        'description': description,
+        'requiresCapabilities': ['archive-assets'],
+        'compatibility': {'online': 'allowed'},
+        'operations': [op for _, op in operations],
+    }
+    manifest['files'] = [{'file': p.relative_to(target).as_posix(), 'sha256': sha(p.read_bytes()),
+                          'bytes': p.stat().st_size} for p in sorted(target.rglob('*')) if p.is_file()]
+    (target / 'mod.json').write_text(json.dumps(manifest, indent=1), encoding='utf-8')
+    mod_format.validate_folder(target)
+    print(f'{target}: {len(operations)} entries.')
+
+
+def merge(target, *sources):
+    """One mod with the operations of several (they must not change the same entry)."""
     manifests = [json.loads((Path(s) / 'mod.json').read_text(encoding='utf-8')) for s in sources]
     claimed = {}
     for source, m in zip(sources, manifests):
@@ -253,33 +285,52 @@ def merge(target, *sources):
             if key in claimed:
                 raise ValueError(f'{op["asset"]} is changed by both {claimed[key]} and {source}')
             claimed[key] = source
-    if target.exists():
-        shutil.rmtree(target)
-    (target / 'assets').mkdir(parents=True)
-    operations = []
-    for source, m in zip(sources, manifests):
-        for op in m['operations']:
-            if 'payload' in op:
-                dest = target / op['payload']
-                if dest.exists():
-                    raise ValueError(f'two payloads named {op["payload"]}')
-                shutil.copyfile(Path(source) / op['payload'], dest)
-            operations.append(op)
-    (target / mod_format.MARKER).write_bytes(mod_format.MARKER_CONTENT)
-    manifest = {
-        'schemaVersion': 2,
-        'id': ''.join(c if c.isalnum() else '-' for c in target.name.lower()).strip('-')[:80],
-        'name': target.name, 'version': '1.0.0', 'author': 'character_import',
-        'description': 'Contains: ' + ', '.join(m['name'] for m in manifests) + '.',
-        'requiresCapabilities': ['archive-assets'],
-        'compatibility': {'online': 'allowed'},
-        'operations': operations,
-    }
-    manifest['files'] = [{'file': p.relative_to(target).as_posix(), 'sha256': sha(p.read_bytes()),
-                          'bytes': p.stat().st_size} for p in sorted(target.rglob('*')) if p.is_file()]
-    (target / 'mod.json').write_text(json.dumps(manifest, indent=1), encoding='utf-8')
-    mod_format.validate_folder(target)
-    print(f'{target}: {len(operations)} entries from {len(sources)} mods.')
+    write_mod(target, [(source, op) for source, m in zip(sources, manifests) for op in m['operations']],
+              'Contains: ' + ', '.join(m['name'] for m in manifests) + '.')
+
+
+def owner(archives):
+    """A function op -> the character an operation of a character or portrait mod belongs to
+    ('names' for the driver names), from its archive, model, texture or portrait name."""
+    from character_mod import material_images
+    keys = {}
+    for c, d in CHARACTERS.items():
+        paks = {d['material_archive'], UI[c]['archives'][0]} | set(d['models'].values())
+        keys.update({p.lower(): c for p in paks})
+        keys.update({m.lower(): c for m in d['models']})
+        blob, _ = pak.effective(archives, d['materials'], d['material_archive'])
+        keys.update({f'textures/{image}.igz'.lower(): c
+                     for images in material_images(blob).values() for image in images})
+    portrait = re.compile(r'(?:racerportrait|minimaps_portrait)_(\w+?)`|custo_ico_char_racer_(\d+)`')
+    by_ui = {v['portrait']: c for c, v in UI.items()} | {v['icon']: c for c, v in UI.items()}
+
+    def find(op):
+        if LANGUAGE.fullmatch(op['asset']):
+            return 'names'
+        m = portrait.search(op['asset'])
+        if m:
+            return by_ui[m.group(1) or m.group(2)]
+        for key in (op['asset'].lower(), Path(op['asset']).name.lower(), op['archive'].lower()):
+            if key in keys:
+                return keys[key]
+        raise ValueError(f'{op["archive"]}: {op["asset"]} belongs to no character')
+    return find
+
+
+def split(archives, pack, *pairs):
+    """One mod per character (and one with the names) out of a pack made with merge."""
+    pack = Path(pack)
+    manifest = json.loads((pack / 'mod.json').read_text(encoding='utf-8'))
+    targets = dict(pair.split('=', 1) for pair in pairs)
+    find = owner(archives)
+    groups = {}
+    for op in manifest['operations']:
+        groups.setdefault(find(op), []).append((pack, op))
+    missing = set(groups) - set(targets)
+    if missing:
+        raise ValueError(f'no mod folder given for {sorted(missing)}')
+    for c, ops in groups.items():
+        write_mod(targets[c], ops, f'Split from {manifest["name"]}.')
 
 
 if __name__ == '__main__':
@@ -287,6 +338,8 @@ if __name__ == '__main__':
         names(*sys.argv[2:])
     elif len(sys.argv) >= 4 and sys.argv[1] == 'merge':
         merge(*sys.argv[2:])
+    elif len(sys.argv) >= 5 and sys.argv[1] == 'split':
+        split(*sys.argv[2:])
     elif len(sys.argv) >= 4 and sys.argv[1] == 'repack':
         repack(*sys.argv[2:])
     elif len(sys.argv) == 6 and sys.argv[1] == 'portrait' and sys.argv[2] in UI:
